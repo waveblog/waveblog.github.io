@@ -16,24 +16,23 @@
   <meta name="author" content="Wave Mu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.插件介绍 OpenWRT TencentDDNS插件是一款腾讯云研发的，自动映射动态公网IP至用户指定的DNSPod域名解析记录的官方插件。     标题 名称    中文名称 腾讯云DDNS插件   英文名称 luci-app-tencentddns   最新版本 0.1.0 (2020.09.17)   适用平台 Lean OpenWRT(opens new window)   适用产品">
+    <meta name="description" content="在群晖 NAS 上配置开启 NFS 服务打开群晖的 设置 - 文件服务 - NFS，把 NFS 服务勾选上，协议选最新即可。 配置文件夹的 NFS 权限在 设置 - 共享文件夹 下，选择需要开启 NFS 的共享文件夹，点击 编辑，切换到 NFS 权限 的标签栏下，点击 新增，添加新的 NFS 规则。 服务器或IP地址，填写需要访问群晖的服务器的 IP（比如我的服务器和群晖在同一局域网下，那么填我的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OpenWrt安装腾讯云DDNS插件">
-<meta property="og:url" content="https://waveblog.github.io/2024/03/17/OpenWrt%E5%AE%89%E8%A3%85%E8%85%BE%E8%AE%AF%E4%BA%91DDNS%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:title" content="Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）">
+<meta property="og:url" content="https://waveblog.github.io/2024/03/17/Linux%20%E4%B8%8B%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96%20NAS%20%E7%A1%AC%E7%9B%98%E6%8B%93%E5%B1%95%E7%A9%BA%E9%97%B4%EF%BC%88NFS%EF%BC%89/index.html">
 <meta property="og:site_name" content="蜉蝣记">
-<meta property="og:description" content="1.插件介绍 OpenWRT TencentDDNS插件是一款腾讯云研发的，自动映射动态公网IP至用户指定的DNSPod域名解析记录的官方插件。     标题 名称    中文名称 腾讯云DDNS插件   英文名称 luci-app-tencentddns   最新版本 0.1.0 (2020.09.17)   适用平台 Lean OpenWRT(opens new window)   适用产品">
+<meta property="og:description" content="在群晖 NAS 上配置开启 NFS 服务打开群晖的 设置 - 文件服务 - NFS，把 NFS 服务勾选上，协议选最新即可。 配置文件夹的 NFS 权限在 设置 - 共享文件夹 下，选择需要开启 NFS 的共享文件夹，点击 编辑，切换到 NFS 权限 的标签栏下，点击 新增，添加新的 NFS 规则。 服务器或IP地址，填写需要访问群晖的服务器的 IP（比如我的服务器和群晖在同一局域网下，那么填我的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://image.itweek.top/mweb/2024-03-25-17113494938282-17113494852272.png">
 <meta property="article:published_time" content="2024-03-17T03:49:29.000Z">
-<meta property="article:modified_time" content="2024-03-25T06:52:47.216Z">
+<meta property="article:modified_time" content="2024-04-05T10:19:37.231Z">
 <meta property="article:author" content="Wave Mu">
-<meta property="article:tag" content="OpenWrt">
+<meta property="article:tag" content="Nas">
+<meta property="article:tag" content="Nfs">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://image.itweek.top/mweb/2024-03-25-17113494938282-17113494852272.png">
   
   
   
-  <title>OpenWrt安装腾讯云DDNS插件 - 蜉蝣记</title>
+  <title>Linux 下挂载群晖 NAS 硬盘拓展空间（NFS） - 蜉蝣记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -241,7 +240,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="OpenWrt安装腾讯云DDNS插件"></span>
+            <span id="subtitle" data-typed-text="Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）"></span>
           
         </div>
 
@@ -264,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          559 字
+          334 字
         
       </span>
     
@@ -275,7 +274,7 @@
         
         
         
-          5 分钟
+          3 分钟
         
       </span>
     
@@ -320,76 +319,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">OpenWrt安装腾讯云DDNS插件</h1>
+            <h1 id="seo-header">Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="1-插件介绍"><a href="#1-插件介绍" class="headerlink" title="1.插件介绍"></a>1.插件介绍</h2><blockquote>
-<p>OpenWRT TencentDDNS插件是一款腾讯云研发的，自动映射动态公网IP至用户指定的DNSPod域名解析记录的官方插件。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>标题</th>
-<th>名称</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>中文名称</td>
-<td>腾讯云DDNS插件</td>
-</tr>
-<tr>
-<td>英文名称</td>
-<td>luci-app-tencentddns</td>
-</tr>
-<tr>
-<td>最新版本</td>
-<td>0.1.0 (2020.09.17)</td>
-</tr>
-<tr>
-<td>适用平台</td>
-<td><a target="_blank" rel="noopener" href="https://github.com/coolsnowwolf/lede">Lean OpenWRT(opens new window)</a></td>
-</tr>
-<tr>
-<td>适用产品</td>
-<td><a target="_blank" rel="noopener" href="https://www.dnspod.cn/">DNSPod(opens new window)</a></td>
-</tr>
-<tr>
-<td>GitHub项目</td>
-<td><a target="_blank" rel="noopener" href="https://github.com/Tencent-Cloud-Plugins/tencentcloud-openwrt-plugin-ddns">tencentcloud-openwrt-plugin-ddns(opens new window)</a></td>
-</tr>
-<tr>
-<td>gitee项目</td>
-<td><a target="_blank" rel="noopener" href="https://gitee.com/Tencent-Cloud-Plugins/tencentcloud-openwrt-plugin-ddns">tencentcloud-openwrt-plugin-ddns(opens new window)</a></td>
-</tr>
-<tr>
-<td>主创团队</td>
-<td>腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）</td>
-</tr>
-</tbody></table>
-<h2 id="2-功能特性"><a href="#2-功能特性" class="headerlink" title="2.功能特性"></a>2.功能特性</h2><ul>
-<li>可在安装了openwrt的软路由上，将运营商分配的家庭宽带公网IP动态关联到指定的DNSPod域名解析记录上。实现通过域名访问家庭内网服务的目的。</li>
-</ul>
-<blockquote>
-<p>前提条件: 家用宽带必须要有公网IP，域名</p>
-</blockquote>
-<h2 id="3-安装指引"><a href="#3-安装指引" class="headerlink" title="3.安装指引"></a>3.安装指引</h2><h3 id="安装ipk包"><a href="#安装ipk包" class="headerlink" title="安装ipk包"></a>安装ipk包</h3><p>登录openwrt路由器,进入系统→软件包页面，将下方软件包的地址放入从网络安装的输入框中，点击确认完成安装。 ipk安装地址：<a target="_blank" rel="noopener" href="https://openwrt-tencentddns-1301800460.cos.ap-guangzhou.myqcloud.com/luci-app-tencentddns_0.1.0-1_all.ipk">https://openwrt-tencentddns-1301800460.cos.ap-guangzhou.myqcloud.com/luci-app-tencentddns_0.1.0-1_all.ipk</a> [外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-LMMvO1kF-1651889091707)(<a target="_blank" rel="noopener" href="https://openapp.qq.com/docs/assets/img/ddns1.ed257ea9.png)]">https://openapp.qq.com/docs/assets/img/ddns1.ed257ea9.png)]</a></p>
-<h2 id="4-使用指引"><a href="#4-使用指引" class="headerlink" title="4.使用指引"></a>4.使用指引</h2><h3 id="4-1-界面功能介绍"><a href="#4-1-界面功能介绍" class="headerlink" title="4.1 界面功能介绍"></a>4.1 界面功能介绍</h3><p>[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-RYnauLsW-1651889091718)(<a target="_blank" rel="noopener" href="https://openapp.qq.com/docs/assets/img/ddns2.293bb7ff.png)]">https://openapp.qq.com/docs/assets/img/ddns2.293bb7ff.png)]</a></p>
-<blockquote>
-<p>上图主要是配置DDNS插件的腾讯云参数，包括密钥ID、密钥Token、WAN-IP来源、主域名和子域名等</p>
-</blockquote>
-<h3 id="4-2-名词解释"><a href="#4-2-名词解释" class="headerlink" title="4.2 名词解释"></a>4.2 名词解释</h3><ul>
-<li><strong>启用</strong>：是否开启腾讯云DDNS</li>
-<li><strong>清除所有同名记录</strong>：如果一个域名有多个A解析记录，是否一并清除</li>
-<li><strong>密钥ID</strong>：DNSPod后台密钥管理中的ID，获取地址：<a target="_blank" rel="noopener" href="https://console.dnspod.cn/account/token">DNSPod密钥管理(opens new window)</a></li>
-<li><strong>密钥Token</strong>：DNSPod后台密钥管理中的Token。获取地址：<a target="_blank" rel="noopener" href="https://console.dnspod.cn/account/token">DNSPod密钥管理(opens new window)</a></li>
-<li><strong>主域名</strong>：主域名，如: github.com</li>
-<li><strong>子域名</strong>：子域名，如：www</li>
-<li><strong>检查时间</strong>：后台对域名解析检查的时间间隔</li>
-</ul>
-<h3 id="4-3-DNSPod配置"><a href="#4-3-DNSPod配置" class="headerlink" title="4.3 DNSPod配置"></a>4.3 DNSPod配置</h3><p>登录腾讯云DNSPOD，账号中心-&gt; api密钥 -&gt; DNSPod Token 创建密钥，<code>ID</code>即为<code>密钥ID</code>，<code>Token</code>即为<code>密钥Token</code></p>
-<p><img src="https://image.itweek.top/mweb/2024-03-25-17113494938282-17113494852272.png" srcset="/img/loading.gif" lazyload alt="image-20220507094930662"></p>
+                <h2 id="在群晖-NAS-上配置"><a href="#在群晖-NAS-上配置" class="headerlink" title="在群晖 NAS 上配置"></a>在群晖 NAS 上配置</h2><h3 id="开启-NFS-服务"><a href="#开启-NFS-服务" class="headerlink" title="开启 NFS 服务"></a>开启 NFS 服务</h3><p>打开群晖的 <code>设置</code> - <code>文件服务</code> - <code>NFS</code>，把 NFS 服务勾选上，协议选最新即可。</p>
+<h3 id="配置文件夹的-NFS-权限"><a href="#配置文件夹的-NFS-权限" class="headerlink" title="配置文件夹的 NFS 权限"></a>配置文件夹的 NFS 权限</h3><p>在 <code>设置</code> - <code>共享文件夹</code> 下，选择需要开启 NFS 的共享文件夹，点击 <code>编辑</code>，切换到 <code>NFS 权限</code> 的标签栏下，点击 <code>新增</code>，添加新的 NFS 规则。</p>
+<p><code>服务器或IP地址</code>，填写需要访问群晖的服务器的 IP（比如我的服务器和群晖在同一局域网下，那么填我的服务器的内网 IP 192.168.1.2 即可）。勾选 <code>允许来自非特杈端口的连接</code> 和 <code>允许用户访问已装载了文件夹</code>，其他设置保持默认即可。</p>
+<h2 id="在服务器上执行挂载"><a href="#在服务器上执行挂载" class="headerlink" title="在服务器上执行挂载"></a>在服务器上执行挂载</h2><p>首先，安装 nfs 服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt update<br>apt install nfs-common<br></code></pre></td></tr></table></figure>
+
+<p>随后，在服务器上创建挂载的路径，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount -t nfs NAS的IP地址:共享文件夹的路径 /NFS客户端路径<br></code></pre></td></tr></table></figure>
+
+<p>这里共享文件夹的路径可以在<code>File Station</code>右键要共享的文件夹，点<code>属性</code>，在<code>位置</code>里能看到路径信息</p>
+<p>最后执行挂载命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount -t nfs NAS的IP地址:共享文件夹的路径 /NFS客户端路径<br></code></pre></td></tr></table></figure>
+
+<p>比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo mount -t nfs 192.168.1.3:/volume1/music /DATA/nfs/music<br></code></pre></td></tr></table></figure>
+
+<p>如果没有报错，使用 <code>df</code> 命令即可查看挂载情况。</p>
 
                 
               </div>
@@ -423,7 +374,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/OpenWrt/" class="print-no-link">#OpenWrt</a>
+        <a href="/tags/Nas/" class="print-no-link">#Nas</a>
+      
+        <a href="/tags/Nfs/" class="print-no-link">#Nfs</a>
       
     </div>
   
@@ -435,8 +388,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>OpenWrt安装腾讯云DDNS插件</div>
-      <div>https://waveblog.github.io/2024/03/17/OpenWrt安装腾讯云DDNS插件/</div>
+      <div>Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）</div>
+      <div>https://waveblog.github.io/2024/03/17/Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）/</div>
     </div>
     <div class="license-meta">
       
@@ -480,15 +433,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/17/Linux%20%E4%B8%8B%E6%8C%82%E8%BD%BD%E7%BE%A4%E6%99%96%20NAS%20%E7%A1%AC%E7%9B%98%E6%8B%93%E5%B1%95%E7%A9%BA%E9%97%B4%EF%BC%88NFS%EF%BC%89/" title="Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）">
+                      <a href="/2024/03/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%EF%BC%9APCM%E9%9F%B3%E9%A2%91%E6%B5%81%E8%BD%ACWAV/" title="记一次语音合成遇到的坑：PCM音频流转WAV">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux 下挂载群晖 NAS 硬盘拓展空间（NFS）</span>
+                        <span class="hidden-mobile">记一次语音合成遇到的坑：PCM音频流转WAV</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2024/03/17/OpenWrt%E5%AE%89%E8%A3%85%E8%85%BE%E8%AE%AF%E4%BA%91DDNS%E6%8F%92%E4%BB%B6/" title="OpenWrt安装腾讯云DDNS插件">
+                        <span class="hidden-mobile">OpenWrt安装腾讯云DDNS插件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
