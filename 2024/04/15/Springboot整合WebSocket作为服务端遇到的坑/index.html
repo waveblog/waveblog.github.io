@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://image.itweek.top/mweb/2024-04-18-17134113976229-%E8%AF%AD%E9%9F%B3%E6%B5%81%E5%AF%B9%E6%8E%A5.jpeg">
 <meta property="article:published_time" content="2024-04-15T03:49:29.000Z">
-<meta property="article:modified_time" content="2024-04-18T03:36:40.711Z">
+<meta property="article:modified_time" content="2024-04-18T10:04:02.456Z">
 <meta property="article:author" content="Wave Mu">
 <meta property="article:tag" content="WebSocket">
 <meta property="article:tag" content="Springboot">
@@ -340,7 +340,7 @@
 
 <p>该日志就很明显了，我方系统的Websocket服务端默认接收的字节流长度为<code>8192</code>，但是发送的字节流达到了<code>76992</code>，所以最后的音频流接收不到，导致最后几句话的内容丢失。</p>
 <p><strong>为什么只会丢失最后几句话？</strong></p>
-<p>原因：坐席客服系统重复发语音流的过程中语音流的长度为<code>4096</code>，未超过<code>WebSocket</code>服务端默认接收的字节流长度，所以中间过程没问题。但是最后通话结束后，坐席客服系统会把剩余所有的字节流全部发送过来，字节流的长度超过了<code>8096</code>，服务端不会接收该字节流导致最后的语音流丢失，且服务端没有想过错误日志。</p>
+<p>原因：坐席客服系统重复发语音流的过程中语音流的长度为<code>4096</code>，未超过<code>WebSocket</code>服务端默认接收的字节流长度，所以中间过程没问题。但是最后通话结束后，坐席客服系统会把剩余所有的字节流全部发送过来，字节流的长度超过了<code>8096</code>，服务端不会接收该字节流导致最后的语音流丢失，且服务端没有相关错误日志。</p>
 <p><strong>怎么解决?</strong></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/21730566/how-to-increase-output-buffer-for-spring-sockjs-websocket-server-implementation">如何增加spring-sockjs-websocket服务器实现的输出缓冲区</a></p>
 <p>因为是用<code>Springboot</code>整合<code>Websocket</code>，只需增加如下配置即可调整输出缓冲区:</p>
