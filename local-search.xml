@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Springboot整合WebSocket作为服务端遇到的坑</title>
+    <link href="/2024/04/15/Springboot%E6%95%B4%E5%90%88WebSocket%E4%BD%9C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
+    <url>/2024/04/15/Springboot%E6%95%B4%E5%90%88WebSocket%E4%BD%9C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近遇到一个需求，对接某公有云上的坐席系统，需要接收人工坐席和客户对话的语音流，然后调用<code>ASR</code>（Automatic Speech Recognition，自动语音识别）引擎，对语音流实时转写，最后将实时转写的内容推送到kafka，供下游系统消费。</p></blockquote><p>大致流程图如下:</p><p><img src="/media/%E8%AF%AD%E9%9F%B3%E6%B5%81%E5%AF%B9%E6%8E%A5.jpeg" alt="语音流对接"></p><p>标绿的系统即是我方需求对接系统。</p><blockquote><p>问题: 上述前面流程都没问题，但是发现最终的转写内容总是会丢最后的一两句话。对接系统也没有错误日志。</p></blockquote><p>联系坐席客服系统研发人员协助排查问题，刚开始对方的研发人员也没发现问题，对方系统也没有错误日志(是压根就没打印日志，这个是最坑的)。最后排查很久依然无法找到问题，就只能对方的测试系统和我本地的系统直接联调。对方的系统开启日志后发现有一个报错，报错如下:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs log">2024-04-02 15:23:46.144  INFO 1 --- [tReadThread-152] c.t.c.a.rasr.client.RasrClientWebSocket  [] [] [] [] [] : rasr-web-socket onClose. message=No async message support and buffer too small. Buffer size: [8,192], Message size: [76,992]... <br></code></pre></td></tr></table></figure><p>该日志就很明显了，我方系统的Websocket服务端默认接收的字节流长度为<code>8192</code>，但是发送的字节流达到了<code>76992</code>，所以最后的音频流接收不到，导致最后几句话的内容丢失。</p><p><strong>为什么只会丢失最后几句话？</strong></p><p>原因：坐席客服系统重复发语音流的过程中语音流的长度为<code>4096</code>，未超过<code>WebSocket</code>服务端默认接收的字节流长度，所以中间过程没问题。但是最后通话结束后，坐席客服系统会把剩余所有的字节流全部发送过来，字节流的长度超过了<code>8096</code>，服务端不会接收该字节流导致最后的语音流丢失，且服务端没有想过错误日志。</p><p><strong>怎么解决?</strong></p><p><a href="https://stackoverflow.com/questions/21730566/how-to-increase-output-buffer-for-spring-sockjs-websocket-server-implementation">如何增加spring-sockjs-websocket服务器实现的输出缓冲区</a></p><p>因为是用<code>Springboot</code>整合<code>Websocket</code>，只需增加如下配置即可调整输出缓冲区:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.server.standard.ServerEndpointExporter;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 开启WebSocket支持</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ServerEndpointExporter <span class="hljs-title function_">serverEndpointExporter</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerEndpointExporter</span>();<br>    &#125;<br><br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ServletServerContainerFactoryBean <span class="hljs-title function_">createServletServerContainerFactoryBean</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">ServletServerContainerFactoryBean</span> <span class="hljs-variable">container</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServletServerContainerFactoryBean</span>();<br>        container.setMaxTextMessageBufferSize(<span class="hljs-number">102400</span>);<br>        container.setMaxBinaryMessageBufferSize(<span class="hljs-number">102400</span>);<br>        log.info(<span class="hljs-string">&quot;Websocket factory returned&quot;</span>);<br>        <span class="hljs-keyword">return</span> container;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>参考链接:</p><p><a href="https://stackoverflow.com/questions/21730566/how-to-increase-output-buffer-for-spring-sockjs-websocket-server-implementation">How to increase output buffer for spring sockjs websocket server implementation - Stack Overflow</a>、<br><a href="https://www.scaugreen.cn/posts/38508/">在spring-boot利用websocket上传文件发现的问题 | 生子当如哈士奇的小空间</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>术说</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebSocket</tag>
+      
+      <tag>Springboot</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>OpenWrt作为旁路由配置Wireguard实现内网穿透</title>
     <link href="/2024/03/27/OpenWrt%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AEWireguard%20%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     <url>/2024/03/27/OpenWrt%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AEWireguard%20%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
