@@ -24,7 +24,7 @@
 <meta property="og:description" content="前言： 项目需要执行定时任务,该类定时任务只需要实现类似Spring原生的@Scheudle注解的定时方法即可，无需考虑分片、刷新及重启，且因项目是多实例，所以需要考虑实现分布式，考察了目前开源的几款分布式定时任务产品 xxl-job  需要部署server端，考虑项目不需要依赖这么重的第三方的server，所以被pass elastic-job-lite 这个需要的zk版本要3.6以上 公司已">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-20T03:49:29.000Z">
-<meta property="article:modified_time" content="2024-05-11T08:42:49.485Z">
+<meta property="article:modified_time" content="2024-05-11T08:46:04.392Z">
 <meta property="article:author" content="Wave Mu">
 <meta property="article:tag" content="Quartz">
 <meta property="article:tag" content="分布式定时任务">
@@ -274,7 +274,7 @@
         
         
         
-          16 分钟
+          17 分钟
         
       </span>
     
@@ -383,6 +383,12 @@
 <li><p><strong>SimpleJob</strong>  简单示例job ,必须在spring容器内</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleJob</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AbstractJob</span> &#123;<br><br>    <span class="hljs-comment">// 每5秒执行一次</span><br>    <span class="hljs-meta">@ScheduleTag(corn = &quot;*/5 * * * * ?&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;test start...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
+<p>这里如果需要在配置文件里配置<code>cron</code>，需要增加如下配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">aicc.job.properties.simpleJob_test_cron</span>=<span class="hljs-string">0 0/1 * * * ?</span><br></code></pre></td></tr></table></figure>
+
+<p>规则如下：</p>
+<p>aicc.job.properties.<code>beanName(类名首字母小写)</code>.<code>methodName(方法名)</code>.cron
+  </p>
 
                 
               </div>
