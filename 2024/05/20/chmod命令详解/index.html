@@ -16,34 +16,23 @@
   <meta name="author" content="Wave Mu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在github上发现了一款非常好看的字体LXGW WenKai &#x2F; 霞鹜文楷，这里记录下Mac电脑如何安装这个字体，以及我用到的笔记软件更换字体的过程。  Mac安装字体1234# 增加代理,不加代理下载速度会很慢,这里的端口看你本地的代理软件export https_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:7890 http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:789">
+    <meta name="description" content="chmod 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 chmod，需要理解文件权限的表示方法。  权限表示方法文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：  读 (read, r) 写 (write, w) 执行 (execute, x)  这三种权限分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mac系统Obsidian和Typora更换霞鹜文楷字体">
-<meta property="og:url" content="https://waveblog.github.io/2024/05/10/Mac%E7%B3%BB%E7%BB%9FObsidian%E5%92%8CTypora%E6%9B%B4%E6%8D%A2%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7%E5%AD%97%E4%BD%93/index.html">
+<meta property="og:title" content="chmod命令详解">
+<meta property="og:url" content="https://waveblog.github.io/2024/05/20/chmod%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="蜉蝣记">
-<meta property="og:description" content="在github上发现了一款非常好看的字体LXGW WenKai &#x2F; 霞鹜文楷，这里记录下Mac电脑如何安装这个字体，以及我用到的笔记软件更换字体的过程。  Mac安装字体1234# 增加代理,不加代理下载速度会很慢,这里的端口看你本地的代理软件export https_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:7890 http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:789">
+<meta property="og:description" content="chmod 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 chmod，需要理解文件权限的表示方法。  权限表示方法文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：  读 (read, r) 写 (write, w) 执行 (execute, x)  这三种权限分">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101108569.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101116244.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101126770.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101058979.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101059136.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101101042.png">
-<meta property="og:image" content="https://image.itweek.top/pic/202405101150490.png">
-<meta property="article:published_time" content="2024-05-10T11:49:29.000Z">
-<meta property="article:modified_time" content="2024-05-11T05:45:32.155Z">
+<meta property="article:published_time" content="2024-05-20T03:57:29.000Z">
+<meta property="article:modified_time" content="2024-05-20T05:42:50.793Z">
 <meta property="article:author" content="Wave Mu">
-<meta property="article:tag" content="工具">
-<meta property="article:tag" content="Mac">
-<meta property="article:tag" content="Obsidian">
-<meta property="article:tag" content="Typora">
-<meta property="article:tag" content="霞鹜文楷">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="运维">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://image.itweek.top/pic/202405101108569.png">
   
   
   
-  <title>Mac系统Obsidian和Typora更换霞鹜文楷字体 - 蜉蝣记</title>
+  <title>chmod命令详解 - 蜉蝣记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -251,7 +240,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Mac系统Obsidian和Typora更换霞鹜文楷字体"></span>
+            <span id="subtitle" data-typed-text="chmod命令详解"></span>
           
         </div>
 
@@ -262,8 +251,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-10 19:49" pubdate>
-          2024年5月10日 晚上
+        <time datetime="2024-05-20 11:57" pubdate>
+          2024年5月20日 中午
         </time>
       </span>
     
@@ -274,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          244 字
+          813 字
         
       </span>
     
@@ -285,7 +274,7 @@
         
         
         
-          3 分钟
+          7 分钟
         
       </span>
     
@@ -330,34 +319,87 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Mac系统Obsidian和Typora更换霞鹜文楷字体</h1>
+            <h1 id="seo-header">chmod命令详解</h1>
             
             
               <div class="markdown-body">
                 
                 <blockquote>
-<p>在github上发现了一款非常好看的字体<a target="_blank" rel="noopener" href="https://github.com/lxgw/LxgwWenKai">LXGW WenKai &#x2F; 霞鹜文楷</a>，这里记录下Mac电脑如何安装这个字体，以及我用到的笔记软件更换字体的过程。</p>
+<p><code>chmod</code> 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 <code>chmod</code>，需要理解文件权限的表示方法。</p>
 </blockquote>
-<h3 id="Mac安装字体"><a href="#Mac安装字体" class="headerlink" title="Mac安装字体"></a>Mac安装字体</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">增加代理,不加代理下载速度会很慢,这里的端口看你本地的代理软件</span><br>export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890<br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装相关字体</span><br>brew tap homebrew/cask-fonts &amp;&amp; brew install font-lxgw-wenkai<br></code></pre></td></tr></table></figure>
+<h2 id="权限表示方法"><a href="#权限表示方法" class="headerlink" title="权限表示方法"></a>权限表示方法</h2><p>文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：</p>
+<ul>
+<li>读 (read, <code>r</code>)</li>
+<li>写 (write, <code>w</code>)</li>
+<li>执行 (execute, <code>x</code>)</li>
+</ul>
+<p>这三种权限分别用一个字符表示，如果没有权限则用 <code>-</code> 表示。例如：</p>
+<ul>
+<li><code>rwx</code>：读、写、执行权限都有。</li>
+<li><code>rw-</code>：读、写权限有，但没有执行权限。</li>
+</ul>
+<p>每个文件或目录的权限可以用以下格式表示：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">-rwxr-xr<span class="hljs-comment">--</span><br></code></pre></td></tr></table></figure>
+<p>第一位表示文件类型（<code>-</code> 表示普通文件，<code>d</code> 表示目录等），接下来的九位表示权限，分成三组三组。</p>
+<h2 id="使用-chmod-的两种方法：符号法和八进制法"><a href="#使用-chmod-的两种方法：符号法和八进制法" class="headerlink" title="使用 chmod 的两种方法：符号法和八进制法"></a>使用 <code>chmod</code> 的两种方法：符号法和八进制法</h2><h3 id="符号法"><a href="#符号法" class="headerlink" title="符号法"></a>符号法</h3><p>符号法使用字符来表示权限的添加或移除。格式如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">chmod <span class="hljs-selector-attr">[ugoa]</span><span class="hljs-selector-attr">[+-=]</span><span class="hljs-selector-attr">[rwx]</span> 文件名<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>u</code>：用户</li>
+<li><code>g</code>：组</li>
+<li><code>o</code>：其他</li>
+<li><code>a</code>：所有（用户、组和其他）</li>
+</ul>
+<p>符号：</p>
+<ul>
+<li><code>+</code>：添加权限</li>
+<li><code>-</code>：移除权限</li>
+<li><code>=</code>：设置权限（覆盖当前权限）</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> u+x 文件名  <span class="hljs-comment"># 给用户添加执行权限</span><br><span class="hljs-built_in">chmod</span> g-w 文件名  <span class="hljs-comment"># 移除组的写权限</span><br><span class="hljs-built_in">chmod</span> o=r 文件名  <span class="hljs-comment"># 设置其他用户只有读权限</span><br><span class="hljs-built_in">chmod</span> a+r 文件名  <span class="hljs-comment"># 所有人添加读权限</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="Mac查看字体目录"><a href="#Mac查看字体目录" class="headerlink" title="Mac查看字体目录"></a>Mac查看字体目录</h3><p>MAC<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21686333">电脑查询字体</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~/Library/Fonts/<br><br>ls /Library/Fonts/<br><br>ls /System/Library/Fonts/<br></code></pre></td></tr></table></figure>
+<p>在使用 <code>chmod</code> 命令时，省略用户类型<code>u</code>（用户）、<code>g</code>（组）或 <code>o</code>（其他）会默认应用到所有用户类型，即用户、组和其他所有人。因此，命令 <code>chmod +x example.txt</code> 是一种简写形式，等同于 <code>chmod a+x example.txt</code>，其中 a 代表所有人（all）</p>
+<h3 id="八进制法"><a href="#八进制法" class="headerlink" title="八进制法"></a>八进制法</h3><p>八进制法使用一个三位的数字来表示权限，每位数字是一个八进制数，分别表示用户、组和其他的权限。每种权限用以下数字表示：</p>
+<ul>
+<li>读 (r) &#x3D; 4</li>
+<li>写 (w) &#x3D; 2</li>
+<li>执行 (x) &#x3D; 1</li>
+</ul>
+<p>这些数字可以累加，例如：</p>
+<ul>
+<li><code>7</code> 表示读、写和执行权限 (<code>4 + 2 + 1</code>)</li>
+<li><code>6</code> 表示读和写权限 (<code>4 + 2</code>)</li>
+<li><code>5</code> 表示读和执行权限 (<code>4 + 1</code>)</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 755 文件名  <span class="hljs-comment"># 用户有读、写、执行权限，组和其他有读、执行权限</span><br><span class="hljs-built_in">chmod</span> 644 文件名  <span class="hljs-comment"># 用户有读、写权限，组和其他只有读权限</span><br><span class="hljs-built_in">chmod</span> 700 文件名  <span class="hljs-comment"># 只有用户有读、写、执行权限</span><br></code></pre></td></tr></table></figure>
 
-<p>一般自己安装的字体用<code>ls ~/Library/Fonts/</code>即可</p>
-<p><img src="https://image.itweek.top/pic/202405101108569.png" srcset="/img/loading.gif" lazyload alt="自定义字体目录"></p>
-<h3 id="修改Obsidian字体"><a href="#修改Obsidian字体" class="headerlink" title="修改Obsidian字体"></a>修改Obsidian字体</h3><p>打开左下角<code>Setting</code>设置</p>
-<p><img src="https://image.itweek.top/pic/202405101116244.png" srcset="/img/loading.gif" lazyload alt="Obsidian设置字体"></p>
-<p>搜索 <code>LXGW</code>，选择<code>LXGW WenKai Mono</code>点击添加、保存</p>
-<p>效果如下：</p>
-<p><img src="https://image.itweek.top/pic/202405101126770.png" srcset="/img/loading.gif" lazyload alt="Obsidian效果图"></p>
-<h3 id="修改Typora字体"><a href="#修改Typora字体" class="headerlink" title="修改Typora字体"></a>修改Typora字体</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/code_peak/article/details/127193047">修改Typora编辑器的字体_typora字体设置-CSDN博客</a></p>
-<p>打开Typora偏好设置</p>
-<p><img src="https://image.itweek.top/pic/202405101058979.png" srcset="/img/loading.gif" lazyload alt="打开主题文件夹"></p>
-<p><img src="https://image.itweek.top/pic/202405101059136.png" srcset="/img/loading.gif" lazyload alt="主题文件夹"></p>
-<p>我用的是vue主题，这里修改<code>vue.css</code>&#x2F;<code>vue-dark.css</code>两个文件</p>
-<p>在最前面添加 <code>&#39;LXGW WenKai Mono&#39;</code></p>
-<p><img src="https://image.itweek.top/pic/202405101101042.png" srcset="/img/loading.gif" lazyload alt="vue主题css代码"></p>
-<p>最终效果如下：<br><img src="https://image.itweek.top/pic/202405101150490.png" srcset="/img/loading.gif" lazyload alt="Typora效果图"></p>
+<h2 id="示例解释"><a href="#示例解释" class="headerlink" title="示例解释"></a>示例解释</h2><p>假设有一个文件 <code>example.txt</code>，当前权限如下：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rw</span><span class="hljs-literal">-</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
+<p>意味着：</p>
+<ul>
+<li>用户有读和写权限</li>
+<li>组有读权限</li>
+<li>其他人有读权限</li>
+</ul>
+<p>我们可以使用 <code>chmod</code> 修改权限：</p>
+<h3 id="添加执行权限给用户"><a href="#添加执行权限给用户" class="headerlink" title="添加执行权限给用户"></a>添加执行权限给用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> u+x example.txt<br></code></pre></td></tr></table></figure>
+<p>修改后权限为：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rwxr</span><span class="hljs-literal">--</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="移除组的读权限"><a href="#移除组的读权限" class="headerlink" title="移除组的读权限"></a>移除组的读权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> g-r example.txt<br></code></pre></td></tr></table></figure>
+<p>修改后权限为：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rwx</span><span class="hljs-literal">----</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="设置文件权限为-755（用户：读、写、执行；组：读、执行；其他：读、执行）"><a href="#设置文件权限为-755（用户：读、写、执行；组：读、执行；其他：读、执行）" class="headerlink" title="设置文件权限为 755（用户：读、写、执行；组：读、执行；其他：读、执行）"></a>设置文件权限为 <code>755</code>（用户：读、写、执行；组：读、执行；其他：读、执行）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 755 example.txt<br></code></pre></td></tr></table></figure>
+<p>修改后权限为：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-rwxr-xr-x</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>使用 <code>chmod</code> 可以通过符号法和八进制法来修改文件或目录的权限。</li>
+<li>符号法适合进行增量式权限修改，而八进制法适合一次性设置权限。</li>
+<li>理解权限的表示方法对于管理文件系统中的权限至关重要。</li>
+</ul>
 
                 
               </div>
@@ -391,15 +433,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
       
-        <a href="/tags/Mac/" class="print-no-link">#Mac</a>
-      
-        <a href="/tags/Obsidian/" class="print-no-link">#Obsidian</a>
-      
-        <a href="/tags/Typora/" class="print-no-link">#Typora</a>
-      
-        <a href="/tags/%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7/" class="print-no-link">#霞鹜文楷</a>
+        <a href="/tags/%E8%BF%90%E7%BB%B4/" class="print-no-link">#运维</a>
       
     </div>
   
@@ -411,8 +447,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Mac系统Obsidian和Typora更换霞鹜文楷字体</div>
-      <div>https://waveblog.github.io/2024/05/10/Mac系统Obsidian和Typora更换霞鹜文楷字体/</div>
+      <div>chmod命令详解</div>
+      <div>https://waveblog.github.io/2024/05/20/chmod命令详解/</div>
     </div>
     <div class="license-meta">
       
@@ -424,7 +460,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年5月10日</div>
+          <div>2024年5月20日</div>
         </div>
       
       
@@ -456,18 +492,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/20/chmod%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="chmod命令详解">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">chmod命令详解</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/09/IDEA%E5%88%A9%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%8F%92%E4%BB%B6%E9%83%A8%E7%BD%B2Springboot%E9%A1%B9%E7%9B%AE/" title="IDEA利用阿里云插件部署SpringBoot项目">
-                        <span class="hidden-mobile">IDEA利用阿里云插件部署SpringBoot项目</span>
+                      <a href="/2024/05/10/Mac%E7%B3%BB%E7%BB%9FObsidian%E5%92%8CTypora%E6%9B%B4%E6%8D%A2%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7%E5%AD%97%E4%BD%93/" title="Mac系统Obsidian和Typora更换霞鹜文楷字体">
+                        <span class="hidden-mobile">Mac系统Obsidian和Typora更换霞鹜文楷字体</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
