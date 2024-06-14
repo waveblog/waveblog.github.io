@@ -19,7 +19,7 @@
     <meta name="description" content="一、前言 本文主要是对sentinel-dashboard源码进行改造，用在生产环境保障其高可用，主要改造点如下：  接入nacos支持规则管理及推送 监控数据存入influxDb，后续可开发对应的监控组件 客户端主动推送metric   二、Sentinel介绍来看下官方对Sentinel的介绍：Sentinel是分布式系统的流量防卫兵，组成流量防卫兵有如下特性  丰富的应用场景：Sentine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="生产环境Sentinel改造实践（一）：Sentinel核心概念">
-<meta property="og:url" content="https://waveblog.github.io/2023/01/10/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83Sentinel%E6%94%B9%E9%80%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ASentinel%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:url" content="https://itweeks.xyz/2023/01/10/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83Sentinel%E6%94%B9%E9%80%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ASentinel%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="蜉蝣记">
 <meta property="og:description" content="一、前言 本文主要是对sentinel-dashboard源码进行改造，用在生产环境保障其高可用，主要改造点如下：  接入nacos支持规则管理及推送 监控数据存入influxDb，后续可开发对应的监控组件 客户端主动推送metric   二、Sentinel介绍来看下官方对Sentinel的介绍：Sentinel是分布式系统的流量防卫兵，组成流量防卫兵有如下特性  丰富的应用场景：Sentine">
 <meta property="og:locale" content="zh_CN">
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"waveblog.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"fee2009820308ab4809c5d784113e988","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Z2W18b4rQhZD0tEHTkeRTHxB-gzGzoHsz","app_key":"fJh998tyIYpXLEVOgd3aT2vM","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"itweeks.xyz","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"fee2009820308ab4809c5d784113e988","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Z2W18b4rQhZD0tEHTkeRTHxB-gzGzoHsz","app_key":"fJh998tyIYpXLEVOgd3aT2vM","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -475,7 +475,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>生产环境Sentinel改造实践（一）：Sentinel核心概念</div>
-      <div>https://waveblog.github.io/2023/01/10/生产环境Sentinel改造实践（一）：Sentinel核心概念/</div>
+      <div>https://itweeks.xyz/2023/01/10/生产环境Sentinel改造实践（一）：Sentinel核心概念/</div>
     </div>
     <div class="license-meta">
       
