@@ -16,23 +16,31 @@
   <meta name="author" content="Wave Mu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="chmod 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 chmod，需要理解文件权限的表示方法。  权限表示方法文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：  读 (read, r) 写 (write, w) 执行 (execute, x)  这三种权限分">
+    <meta name="description" content="搭建图床服务 这里利用CloudFlare搭建免费的图床服务 cf-image-hosting  部署Pages123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ifyour&#x2F;cf-image-hosting.git$ cd cf-image-hosting$ npm install &amp;&amp; npm run deploy  部署成功后会显示如下信息  设置自定义域名">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chmod命令详解">
-<meta property="og:url" content="https://waveblog.github.io/2024/05/20/chmod%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="Typora设置自定义脚本上传图片">
+<meta property="og:url" content="https://waveblog.github.io/2024/06/14/Typora%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/index.html">
 <meta property="og:site_name" content="蜉蝣记">
-<meta property="og:description" content="chmod 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 chmod，需要理解文件权限的表示方法。  权限表示方法文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：  读 (read, r) 写 (write, w) 执行 (execute, x)  这三种权限分">
+<meta property="og:description" content="搭建图床服务 这里利用CloudFlare搭建免费的图床服务 cf-image-hosting  部署Pages123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ifyour&#x2F;cf-image-hosting.git$ cd cf-image-hosting$ npm install &amp;&amp; npm run deploy  部署成功后会显示如下信息  设置自定义域名">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-20T03:57:29.000Z">
-<meta property="article:modified_time" content="2024-05-20T05:42:50.793Z">
+<meta property="og:image" content="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/129cc7ec09ffc9becc44a.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/032c93b767f0891db99b7.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/3b957e3b3e859164997ea.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/0e630bc8a1f11bc1c9537.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/c80d5a498c9307cfe01f5.png">
+<meta property="article:published_time" content="2024-06-14T03:49:29.000Z">
+<meta property="article:modified_time" content="2024-06-14T03:58:39.847Z">
 <meta property="article:author" content="Wave Mu">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="运维">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="Typora">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png">
   
   
   
-  <title>chmod命令详解 - 蜉蝣记</title>
+  <title>Typora设置自定义脚本上传图片 - 蜉蝣记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -240,7 +248,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="chmod命令详解"></span>
+            <span id="subtitle" data-typed-text="Typora设置自定义脚本上传图片"></span>
           
         </div>
 
@@ -251,8 +259,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-20 11:57" pubdate>
-          2024年5月20日 中午
+        <time datetime="2024-06-14 11:49" pubdate>
+          2024年6月14日 中午
         </time>
       </span>
     
@@ -263,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          813 字
+          1.2k 字
         
       </span>
     
@@ -274,7 +282,7 @@
         
         
         
-          7 分钟
+          10 分钟
         
       </span>
     
@@ -319,87 +327,89 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">chmod命令详解</h1>
+            <h1 id="seo-header">Typora设置自定义脚本上传图片</h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p><code>chmod</code> 是 Unix 和 Linux 系统中用于更改文件或目录权限的命令。权限控制确保只有适当的用户可以读取、写入或执行文件。为了有效地使用 <code>chmod</code>，需要理解文件权限的表示方法。</p>
+                <h3 id="搭建图床服务"><a href="#搭建图床服务" class="headerlink" title="搭建图床服务"></a>搭建图床服务</h3><blockquote>
+<p>这里利用<code>CloudFlare</code>搭建免费的图床服务</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ifyour/cf-image-hosting">cf-image-hosting</a></p>
 </blockquote>
-<h2 id="权限表示方法"><a href="#权限表示方法" class="headerlink" title="权限表示方法"></a>权限表示方法</h2><p>文件权限由三组组成：用户（user），组（group），和其他（others）。每组有三种权限：</p>
-<ul>
-<li>读 (read, <code>r</code>)</li>
-<li>写 (write, <code>w</code>)</li>
-<li>执行 (execute, <code>x</code>)</li>
-</ul>
-<p>这三种权限分别用一个字符表示，如果没有权限则用 <code>-</code> 表示。例如：</p>
-<ul>
-<li><code>rwx</code>：读、写、执行权限都有。</li>
-<li><code>rw-</code>：读、写权限有，但没有执行权限。</li>
-</ul>
-<p>每个文件或目录的权限可以用以下格式表示：</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">-rwxr-xr<span class="hljs-comment">--</span><br></code></pre></td></tr></table></figure>
-<p>第一位表示文件类型（<code>-</code> 表示普通文件，<code>d</code> 表示目录等），接下来的九位表示权限，分成三组三组。</p>
-<h2 id="使用-chmod-的两种方法：符号法和八进制法"><a href="#使用-chmod-的两种方法：符号法和八进制法" class="headerlink" title="使用 chmod 的两种方法：符号法和八进制法"></a>使用 <code>chmod</code> 的两种方法：符号法和八进制法</h2><h3 id="符号法"><a href="#符号法" class="headerlink" title="符号法"></a>符号法</h3><p>符号法使用字符来表示权限的添加或移除。格式如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">chmod <span class="hljs-selector-attr">[ugoa]</span><span class="hljs-selector-attr">[+-=]</span><span class="hljs-selector-attr">[rwx]</span> 文件名<br></code></pre></td></tr></table></figure>
-<ul>
-<li><code>u</code>：用户</li>
-<li><code>g</code>：组</li>
-<li><code>o</code>：其他</li>
-<li><code>a</code>：所有（用户、组和其他）</li>
-</ul>
-<p>符号：</p>
-<ul>
-<li><code>+</code>：添加权限</li>
-<li><code>-</code>：移除权限</li>
-<li><code>=</code>：设置权限（覆盖当前权限）</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> u+x 文件名  <span class="hljs-comment"># 给用户添加执行权限</span><br><span class="hljs-built_in">chmod</span> g-w 文件名  <span class="hljs-comment"># 移除组的写权限</span><br><span class="hljs-built_in">chmod</span> o=r 文件名  <span class="hljs-comment"># 设置其他用户只有读权限</span><br><span class="hljs-built_in">chmod</span> a+r 文件名  <span class="hljs-comment"># 所有人添加读权限</span><br></code></pre></td></tr></table></figure>
+<h4 id="部署Pages"><a href="#部署Pages" class="headerlink" title="部署Pages"></a>部署Pages</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/ifyour/cf-image-hosting.git</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> cf-image-hosting</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm install &amp;&amp; npm run deploy</span><br></code></pre></td></tr></table></figure>
 
-<p>在使用 <code>chmod</code> 命令时，省略用户类型<code>u</code>（用户）、<code>g</code>（组）或 <code>o</code>（其他）会默认应用到所有用户类型，即用户、组和其他所有人。因此，命令 <code>chmod +x example.txt</code> 是一种简写形式，等同于 <code>chmod a+x example.txt</code>，其中 a 代表所有人（all）</p>
-<h3 id="八进制法"><a href="#八进制法" class="headerlink" title="八进制法"></a>八进制法</h3><p>八进制法使用一个三位的数字来表示权限，每位数字是一个八进制数，分别表示用户、组和其他的权限。每种权限用以下数字表示：</p>
-<ul>
-<li>读 (r) &#x3D; 4</li>
-<li>写 (w) &#x3D; 2</li>
-<li>执行 (x) &#x3D; 1</li>
-</ul>
-<p>这些数字可以累加，例如：</p>
-<ul>
-<li><code>7</code> 表示读、写和执行权限 (<code>4 + 2 + 1</code>)</li>
-<li><code>6</code> 表示读和写权限 (<code>4 + 2</code>)</li>
-<li><code>5</code> 表示读和执行权限 (<code>4 + 1</code>)</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 755 文件名  <span class="hljs-comment"># 用户有读、写、执行权限，组和其他有读、执行权限</span><br><span class="hljs-built_in">chmod</span> 644 文件名  <span class="hljs-comment"># 用户有读、写权限，组和其他只有读权限</span><br><span class="hljs-built_in">chmod</span> 700 文件名  <span class="hljs-comment"># 只有用户有读、写、执行权限</span><br></code></pre></td></tr></table></figure>
+<p>部署成功后会显示如下信息</p>
+<p><img src="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png" srcset="/img/loading.gif" lazyload alt="部署预览"></p>
+<h4 id="设置自定义域名"><a href="#设置自定义域名" class="headerlink" title="设置自定义域名"></a>设置自定义域名</h4><p>点击左侧<code>Workers和Pages</code> ，选择<code>cf-image-hosting</code></p>
+<p><img src="https://image.itweeks.xyz/file/129cc7ec09ffc9becc44a.png" srcset="/img/loading.gif" lazyload alt="设置自定义域名"></p>
+<p>设置自定义域成功后则能在部署概览看到自定义的域名</p>
+<p><img src="https://image.itweeks.xyz/file/032c93b767f0891db99b7.png" srcset="/img/loading.gif" lazyload alt="域名列表"></p>
+<p>点击自定义域名后则能跳转到具体的上传图片页面</p>
+<p><img src="https://image.itweeks.xyz/file/3b957e3b3e859164997ea.png" srcset="/img/loading.gif" lazyload alt="上传图片页面"></p>
+<p>至此，免费的图床服务搭建成功。</p>
+<h3 id="Typora自定义脚本上传图片"><a href="#Typora自定义脚本上传图片" class="headerlink" title="Typora自定义脚本上传图片"></a>Typora自定义脚本上传图片</h3><blockquote>
+<p>目前只在mac上做了验证。</p>
+</blockquote>
+<h4 id="官方文档说明"><a href="#官方文档说明" class="headerlink" title="官方文档说明"></a>官方文档说明</h4><blockquote>
+<p>官方文档对自定义脚本有如下说明:</p>
+<p><a target="_blank" rel="noopener" href="https://support.typora.io/Upload-Image/#use-current-filename--filepath-in-custom-commands">Typora自定义脚本</a></p>
+</blockquote>
+<p>You could config a custom command to upload images, using tools that is not listed in above options, or even write your own tools &#x2F; scripts. Typora will append all images that needs to be uploaded after the custom command you filled.</p>
+<blockquote>
+<p>您可以使用上述选项中未列出的工具，甚至编写自己的工具&#x2F;脚本，配置自定义命令来上传图片。Typora 会在你填写的自定义命令后追加所有需要上传的图片。</p>
+</blockquote>
+<p>Then, Typora will fetch image urls from the last N lines of the standard output of your custom command. (N is the number of images to upload).</p>
+<blockquote>
+<p>然后，Typora 会从自定义命令标准输出的最后 N 行中获取图片网址。(N 是要上传的图片数量）。</p>
+</blockquote>
+<p>For example, if you write a tool <code>upload-image.sh</code>, then you can input <code>[some path]/upload-image.sh</code> in the command filed. Typora will call <code>[some path]/upload-image.sh &quot;image-path-1&quot; &quot;image-path-2&quot;</code> to upload two images located in <code>image-path-1</code> and <code>image-path-2</code>. Then the command may return something like:</p>
+<blockquote>
+<p>例如，如果你编写了一个工具 <code>upload-image.sh</code> ，那么你可以在命令文件中输入 <code>[some path]/upload-image.sh</code> 。Typora 将调用 <code>[some path]/upload-image.sh &quot;image-path-1&quot; &quot;image-path-2&quot;</code> 来上传位于 <code>image-path-1</code> 和 <code>image-path-2</code> 中的两张图片。然后，命令可能会返回如下内容</p>
+</blockquote>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dts">Upload Success:<br><span class="hljs-symbol">http:</span><span class="hljs-comment">//remote-image-1.png</span><br><span class="hljs-symbol">http:</span><span class="hljs-comment">//remote-image-2.png</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="示例解释"><a href="#示例解释" class="headerlink" title="示例解释"></a>示例解释</h2><p>假设有一个文件 <code>example.txt</code>，当前权限如下：</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rw</span><span class="hljs-literal">-</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
-<p>意味着：</p>
-<ul>
-<li>用户有读和写权限</li>
-<li>组有读权限</li>
-<li>其他人有读权限</li>
-</ul>
-<p>我们可以使用 <code>chmod</code> 修改权限：</p>
-<h3 id="添加执行权限给用户"><a href="#添加执行权限给用户" class="headerlink" title="添加执行权限给用户"></a>添加执行权限给用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> u+x example.txt<br></code></pre></td></tr></table></figure>
-<p>修改后权限为：</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rwxr</span><span class="hljs-literal">--</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
+<p>Then Typora will get the two remote image url from the output, and replace the original local images used in the Markdown document.</p>
+<blockquote>
+<p>然后，Typora 将从输出中获取两个远程图片 url，并替换 Markdown 文档中使用的原始本地图片。</p>
+</blockquote>
+<p>You could click the “Test Uploader” button to verify your custom commands.</p>
+<blockquote>
+<p>您可以点击 “测试上传程序 “按钮来验证您的自定义命令。</p>
+</blockquote>
+<h4 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h4><ol>
+<li><p><strong>赋予脚本执行权限</strong>：保存脚本后，需要给脚本赋予执行权限。在终端运行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +x upload_image.sh<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行脚本</strong>：在终端中运行脚本，并传递多个图片路径作为参数。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./upload_image.sh path/to/your/image1.jpg path/to/your/image2.jpg<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h5 id="脚本说明："><a href="#脚本说明：" class="headerlink" title="脚本说明："></a>脚本说明：</h5><ol>
+<li><strong>参数检查</strong>：检查是否传递了至少一个图片路径参数。如果没有传递参数，则打印用法信息并退出。</li>
+<li><strong>迭代处理每个图片文件</strong>：对每个传递的图片路径参数进行迭代处理。</li>
+<li><strong>文件检查</strong>：检查每个图片文件是否存在。如果文件不存在，则打印错误信息并继续处理下一个文件。</li>
+<li><strong>上传图片</strong>：使用<code>curl</code>命令将每个图片文件作为<code>file</code>参数上传到指定的API，并将响应存储在<code>RESPONSE</code>变量中。</li>
+<li><strong>解析响应</strong>：使用<code>jq</code>命令解析JSON响应并提取所有<code>src</code>参数的内容。如果<code>jq</code>解析失败，则打印错误信息并继续处理下一个文件。</li>
+<li><strong>打印结果</strong>：逐个打印成功上传后的每个<code>src</code>参数内容，即每张图片的URL。</li>
+</ol>
+<p>这个脚本会处理每个传递的图片文件，上传后解析并打印每个图片的URL。对于每个图片，如果上传失败或解析失败，会打印相应的错误信息，并继续处理下一个图片文件。</p>
+<h5 id="脚本内容："><a href="#脚本内容：" class="headerlink" title="脚本内容："></a>脚本内容：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查是否传递了至少一个图片路径参数</span><br>if [ $# -lt 1 ]; then<br>    echo &quot;Usage: $0 &lt;image_path1&gt; &lt;image_path2&gt; ... &lt;image_pathN&gt;&quot;<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">迭代每个传递的图片路径参数</span><br>for IMAGE_PATH in &quot;$@&quot;; do<br>    # 检查图片文件是否存在<br>    if [ ! -f &quot;$IMAGE_PATH&quot; ]; then<br>        echo &quot;File not found: $IMAGE_PATH&quot;<br>        continue<br>    fi<br><br>    # 上传图片并解析响应<br>    RESPONSE=$(curl -s -F &quot;file=@$IMAGE_PATH&quot; https://image.itweeks.xyz/upload)<br><br>    # 检查响应是否有效<br>    if [ $? -ne 0 ]; then<br>        echo &quot;Failed to upload image: $IMAGE_PATH&quot;<br>        continue<br>    fi<br><br>    # 解析src参数内容并打印<br>    SRC_ARRAY=$(echo $RESPONSE | jq -r &#x27;.[].src&#x27;)<br><br>    # 检查解析结果是否为空<br>    if [ -z &quot;$SRC_ARRAY&quot; ]; then<br>        echo &quot;Failed to parse src from response for image: $IMAGE_PATH&quot;<br>        echo &quot;Response: $RESPONSE&quot;<br>        continue<br>    fi<br><br>    for SRC in $SRC_ARRAY; do<br>        echo &quot;https://image.itweeks.xyz$SRC&quot;<br>    done<br><br>    echo<br>done<br></code></pre></td></tr></table></figure>
 
-<h3 id="移除组的读权限"><a href="#移除组的读权限" class="headerlink" title="移除组的读权限"></a>移除组的读权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> g-r example.txt<br></code></pre></td></tr></table></figure>
-<p>修改后权限为：</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">-</span><span class="hljs-comment">rwx</span><span class="hljs-literal">----</span><span class="hljs-comment">r</span><span class="hljs-literal">--</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="设置文件权限为-755（用户：读、写、执行；组：读、执行；其他：读、执行）"><a href="#设置文件权限为-755（用户：读、写、执行；组：读、执行；其他：读、执行）" class="headerlink" title="设置文件权限为 755（用户：读、写、执行；组：读、执行；其他：读、执行）"></a>设置文件权限为 <code>755</code>（用户：读、写、执行；组：读、执行；其他：读、执行）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 755 example.txt<br></code></pre></td></tr></table></figure>
-<p>修改后权限为：</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-rwxr-xr-x</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>使用 <code>chmod</code> 可以通过符号法和八进制法来修改文件或目录的权限。</li>
-<li>符号法适合进行增量式权限修改，而八进制法适合一次性设置权限。</li>
-<li>理解权限的表示方法对于管理文件系统中的权限至关重要。</li>
-</ul>
+<h5 id="调用示例"><a href="#调用示例" class="headerlink" title="调用示例:"></a>调用示例:</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">~/soft /Users/mulyzhou/soft/upload-image.sh &quot;/Applications/Typora.app/Contents/Resources/TypeMark/assets/icon/icon_512x512.png&quot; &quot;/Applications/Typora.app/Contents/Resources/TypeMark/assets/icon/icon_256x256.png&quot;<br>https://image.itweeks.xyz/file/213fb10821a7758807733.png<br>https://image.itweeks.xyz/file/78332611766cef414f192.png<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://image.itweeks.xyz/file/213fb10821a7758807733.png">https://image.itweeks.xyz/file/213fb10821a7758807733.png</a></p>
+<p><a target="_blank" rel="noopener" href="https://image.itweeks.xyz/file/78332611766cef414f192.png">https://image.itweeks.xyz/file/78332611766cef414f192.png</a></p>
+<p>这两行输出即是上传成功后回显图片的地址，一定要这样直接输出，中间不能输出别的信息，不然typora无法解析</p>
+</blockquote>
+<h4 id="Typora配置脚本"><a href="#Typora配置脚本" class="headerlink" title="Typora配置脚本"></a>Typora配置脚本</h4><p>点击<code>设置</code> - <code>图像</code> - <code>上传服务</code>选择<code>自定义命令</code> - 命令选择脚本路径 如<code>/Users/mulyzhou/soft/upload-image.sh</code></p>
+<p><img src="https://image.itweeks.xyz/file/0e630bc8a1f11bc1c9537.png" srcset="/img/loading.gif" lazyload alt="Typora配置脚本"></p>
+<p>点击验证图片上传选项</p>
+<p><img src="https://image.itweeks.xyz/file/c80d5a498c9307cfe01f5.png" srcset="/img/loading.gif" lazyload alt="验证成功示例"></p>
+<p>显示验证成功后则代表配置成功。</p>
 
                 
               </div>
@@ -433,9 +443,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
       
-        <a href="/tags/%E8%BF%90%E7%BB%B4/" class="print-no-link">#运维</a>
+        <a href="/tags/Mac/" class="print-no-link">#Mac</a>
+      
+        <a href="/tags/Typora/" class="print-no-link">#Typora</a>
       
     </div>
   
@@ -447,8 +459,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>chmod命令详解</div>
-      <div>https://waveblog.github.io/2024/05/20/chmod命令详解/</div>
+      <div>Typora设置自定义脚本上传图片</div>
+      <div>https://waveblog.github.io/2024/06/14/Typora设置自定义脚本上传图片/</div>
     </div>
     <div class="license-meta">
       
@@ -460,7 +472,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年5月20日</div>
+          <div>2024年6月14日</div>
         </div>
       
       
@@ -492,18 +504,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/14/Typora%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/" title="Typora设置自定义脚本上传图片">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Typora设置自定义脚本上传图片</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/10/Mac%E7%B3%BB%E7%BB%9FObsidian%E5%92%8CTypora%E6%9B%B4%E6%8D%A2%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7%E5%AD%97%E4%BD%93/" title="Mac系统Obsidian和Typora更换霞鹜文楷字体">
-                        <span class="hidden-mobile">Mac系统Obsidian和Typora更换霞鹜文楷字体</span>
+                      <a href="/2024/05/20/chmod%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="chmod命令详解">
+                        <span class="hidden-mobile">chmod命令详解</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
