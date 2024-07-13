@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/wave_blog_icon.png">
+  <link rel="icon" href="/img/wave_blog_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wave Mu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介先来看下维基百科WebSocket的简介：  WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermedia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot整合WebSocket实践">
+<meta property="og:url" content="https://itweeks.xyz/2024/03/19/SpringBoot%E6%95%B4%E5%90%88WebSocket%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="蜉蝣记">
+<meta property="og:description" content="简介先来看下维基百科WebSocket的简介：  WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermedia">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.itweek.top/mweb/2024-03-25-17113487373348-17113486980461.png">
+<meta property="og:image" content="https://image.itweek.top/mweb/2024-03-25-17113487373373-17113486980480.png">
+<meta property="article:published_time" content="2024-03-19T03:49:29.000Z">
+<meta property="article:modified_time" content="2024-07-13T00:04:21.057Z">
+<meta property="article:author" content="Wave Mu">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="WebSocket">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://image.itweek.top/mweb/2024-03-25-17113487373348-17113486980461.png">
+  
+  
+  
+  <title>SpringBoot整合WebSocket实践 - 蜉蝣记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"itweeks.xyz","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"fee2009820308ab4809c5d784113e988","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Z2W18b4rQhZD0tEHTkeRTHxB-gzGzoHsz","app_key":"fJh998tyIYpXLEVOgd3aT2vM","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?fee2009820308ab4809c5d784113e988";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>蜉蝣记</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SpringBoot整合WebSocket实践"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-19 11:49" pubdate>
+          2024年3月19日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文总阅读量：<span id="leancloud-page-views"></span>
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">SpringBoot整合WebSocket实践</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>先来看下维基百科WebSocket的简介：</p>
+<blockquote>
+<p>WebSocket是一种与<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE">HTTP</a>不同的协议。两者都位于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B">OSI模型</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E5%B1%82">应用层</a>，并且都依赖于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BC%A0%E8%BE%93%E5%B1%82">传输层</a>的TCP协议。 虽然它们不同，但是RFC 6455中规定：<code>it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries</code>（WebSocket通过HTTP端口80和443进行工作，并支持HTTP代理和中介），从而使其与HTTP协议兼容。 为了实现兼容性，WebSocket握手使用HTTP Upgrade头[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/WebSocket#cite_note-1">1]</a>从HTTP协议更改为WebSocket协议。</p>
+<p>WebSocket协议支持Web<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B5%8F%E8%A7%88%E5%99%A8">浏览器</a>（或其他客户端应用程序）与Web<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>之间的交互，具有较低的开销，便于实现客户端与服务器的实时数据传输。 服务器可以通过标准化的方式来实现，而无需客户端首先请求内容，并允许消息在保持连接打开的同时来回传递。通过这种方式，可以在客户端和服务器之间进行双向持续对话。 通信通过TCP端口80或443完成，这在防火墙阻止非Web网络连接的环境下是有益的。另外，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Comet_(web%E6%8A%80%E6%9C%AF)">Comet</a>之类的技术以非标准化的方式实现了类似的双向通信。</p>
+<p>大多数浏览器都支持该协议，包括<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Google_Chrome">Google Chrome</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Firefox">Firefox</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Safari">Safari</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Microsoft_Edge">Microsoft Edge</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Internet_Explorer">Internet Explorer</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Opera%E7%80%8F%E8%A6%BD%E5%99%A8">Opera</a>。</p>
+<p>WebSocket协议规范将<code>ws</code>（WebSocket）和<code>wss</code>（WebSocket Secure）定义为两个新的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B5%B1%E4%B8%80%E8%B3%87%E6%BA%90%E6%A8%99%E8%AD%98%E7%AC%A6">统一资源标识符</a>（URI）方案，分别对应明文和加密连接。除了方案名称和片段ID（不支持<code>#</code>）之外，其余的URI组件都被定义为此URI的通用语法。</p>
+<p>使用浏览器开发人员工具，开发人员可以检查WebSocket握手以及WebSocket框架。</p>
+</blockquote>
+<p>WebSocket用于前端(Web浏览器)和后端(Web服务器)保持长时间连接及数据实时传输。</p>
+<p>客户端首先请求内容，并允许消息在保持连接打开的同时来回传递，通过这种方式，可以在客户端和服务器之间进行双向持续对话。</p>
+<p>扩展：维持http长连接的几种方式有以下几种，具体可网上搜索相关实现，这里只介绍WebSocket保持长连接。</p>
+<ul>
+<li>ajax 轮询</li>
+<li>long poll <strong>长</strong>轮询</li>
+<li>iframe <strong>长连接</strong></li>
+<li>WebSocket.</li>
+</ul>
+<p>以下开始SpringBoot整合WebSocket</p>
+<h4 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-websocket<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.75<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cn.hutool<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hutool-all<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.7.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="开启WebSocket支持"><a href="#开启WebSocket支持" class="headerlink" title="开启WebSocket支持"></a>开启WebSocket支持</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.server.standard.ServerEndpointExporter;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 开启WebSocket支持</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/21 下午5:01</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ServerEndpointExporter <span class="hljs-title function_">serverEndpointExporter</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerEndpointExporter</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="会话操作接口封装"><a href="#会话操作接口封装" class="headerlink" title="会话操作接口封装"></a>会话操作接口封装</h4><p>如果需要客户端服务端消息传输，WebSocket提供了<code>javax.websocket.Session</code>类,这里只用到其中几个方法</p>
+<ul>
+<li><strong>socketChannel.getBasicRemote().sendText(msg);</strong></li>
+<li><strong>socketChannel.getAsyncRemote().sendText(msg);</strong></li>
+<li><strong>socketChannel.isOpen();</strong></li>
+<li><strong>socketChannel.close();</strong></li>
+</ul>
+<p>这里定义四个方法，主要是对<code>javax.websocket.Session</code>类操作的封装</p>
+<p>以下是该接口的包装实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * socket会话操作接口</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 该接口面向会话，须基于会话的通道调用。</span><br><span class="hljs-comment"> * 该接口支持扩展，可参考WebSocket模块中&#123;<span class="hljs-doctag">@link</span> com.muly.wave.socket.websocket.operator.channel&#125;包下的类</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:46</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">SocketSessionOperatorApi</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 写出数据，经过责任链</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeAndFlush</span><span class="hljs-params">(Object obj)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 写出数据，不经过责任链</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeToChannel</span><span class="hljs-params">(Object obj)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 关闭会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">close</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否存活</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> boolean&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:50</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isInvalid</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.SocketSessionOperatorApi;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 对Api模块的操作类进行扩展</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 暂时只写接口，SocketOperatorApi方法不够用时再对此类进行扩展</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午3:44</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">SocketChannelExpandInterFace</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SocketSessionOperatorApi</span> &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSON;<br><br><span class="hljs-keyword">import</span> javax.websocket.Session;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Socket操作类实现</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 简单封装Spring Boot的默认WebSocket</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午3:41</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WaveSocketOperator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">SocketChannelExpandInterFace</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 实际操作的通道</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> Session socketChannel;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">WaveSocketOperator</span><span class="hljs-params">(Session socketChannel)</span> &#123;<br>        <span class="hljs-built_in">this</span>.socketChannel = socketChannel;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeAndFlush</span><span class="hljs-params">(Object obj)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (socketChannel.isOpen()) &#123;<br>                socketChannel.getBasicRemote().sendText(JSON.toJSONString(obj));<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeToChannel</span><span class="hljs-params">(Object obj)</span> &#123;<br>        <span class="hljs-keyword">if</span> (socketChannel.isOpen()) &#123;<br>            socketChannel.getAsyncRemote().sendText(JSON.toJSONString(obj));<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">close</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (socketChannel.isOpen()) &#123;<br>                socketChannel.close();<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isInvalid</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> socketChannel.isOpen();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="SocketSession"><a href="#SocketSession" class="headerlink" title="SocketSession"></a>SocketSession</h4><p>该类持有会话操作接口<code>SocketSessionOperatorApi</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.SocketSessionOperatorApi;<br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Socket会话</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 上午11:28</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SocketSession</span>&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SocketSessionOperatorApi</span>&gt; &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 会话ID，每一个新建的会话都有(目前使用通道ID)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String sessionId;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 会话唯一标识</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String userId;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 该会话监听的消息类型</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String messageType;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * token信息</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String token;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接时间</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> Long connectionTime;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 最后活跃时间</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> Long lastActiveTime;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 操作API</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> T socketOperatorApi;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 自定义数据</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> Object data;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接下来再定义个存储SocketSession的会话中心类</p>
+<h4 id="SessionCenter会话中心"><a href="#SessionCenter会话中心" class="headerlink" title="SessionCenter会话中心"></a>SessionCenter会话中心</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> cn.hutool.core.util.ObjectUtil;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.pojo.SocketSession;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.operator.channel.WaveSocketOperator;<br><br><span class="hljs-keyword">import</span> java.util.*;<br><span class="hljs-keyword">import</span> java.util.concurrent.ConcurrentHashMap;<br><span class="hljs-keyword">import</span> java.util.concurrent.ConcurrentMap;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 会话中心</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 维护所有的会话</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午1:43</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SessionCenter</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 所有用户会话维护</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ConcurrentMap&lt;String, List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt; socketSessionMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcurrentHashMap</span>&lt;&gt;();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 获取维护的所有会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> ConcurrentMap&lt; String, SocketSession&lt; WaveSocketOperator &gt;&gt;&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:13</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ConcurrentMap&lt;String, List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt; <span class="hljs-title function_">getSocketSessionMap</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> socketSessionMap;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据用户ID获取会话信息列表</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userId 用户ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> SocketSession &lt;GunsSocketOperator&gt;&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午1:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; <span class="hljs-title function_">getSessionByUserId</span><span class="hljs-params">(String userId)</span> &#123;<br>        <span class="hljs-keyword">return</span> socketSessionMap.get(userId);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据用户ID和消息类型获取会话信息列表</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userId 用户ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> SocketSession &lt;GunsSocketOperator&gt;&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午1:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; <span class="hljs-title function_">getSessionByUserIdAndMsgType</span><span class="hljs-params">(String userId)</span> &#123;<br>        <span class="hljs-keyword">return</span> socketSessionMap.get(userId);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据会话ID获取会话信息</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sessionId 会话ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> SocketSession &lt;GunsSocketOperator&gt;&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午1:48</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SocketSession&lt;WaveSocketOperator&gt; <span class="hljs-title function_">getSessionBySessionId</span><span class="hljs-params">(String sessionId)</span> &#123;<br>        <span class="hljs-keyword">for</span> (List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; values : socketSessionMap.values()) &#123;<br>            <span class="hljs-keyword">for</span> (SocketSession&lt;WaveSocketOperator&gt; session : values) &#123;<br>                <span class="hljs-keyword">if</span> (sessionId.equals(session.getSessionId())) &#123;<br>                    <span class="hljs-keyword">return</span> session;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 设置会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> socketSession 会话详情</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午1:49</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addSocketSession</span><span class="hljs-params">(SocketSession&lt;WaveSocketOperator&gt; socketSession)</span> &#123;<br>        List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; socketSessions = socketSessionMap.get(socketSession.getUserId());<br>        <span class="hljs-keyword">if</span> (ObjectUtil.isEmpty(socketSessions)) &#123;<br>            socketSessions = Collections.synchronizedList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;());<br>            socketSessionMap.put(socketSession.getUserId(), socketSessions);<br>        &#125;<br>        socketSessions.add(socketSession);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接关闭</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sessionId 会话ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午3:25</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">closed</span><span class="hljs-params">(String sessionId)</span> &#123;<br>        Set&lt;Map.Entry&lt;String, List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt;&gt; entrySet = socketSessionMap.entrySet();<br>        Iterator&lt;Map.Entry&lt;String, List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt;&gt; iterator = entrySet.iterator();<br>        <span class="hljs-keyword">while</span> (iterator.hasNext()) &#123;<br>            Map.Entry&lt;String, List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt; next = iterator.next();<br>            List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; value = next.getValue();<br>            <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(value)) &#123;<br>                value.removeIf(GunsSocketOperatorSocketSession -&gt; GunsSocketOperatorSocketSession.getSessionId().equals(sessionId));<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个类的主要作用是所有用户会话的维护,存储在支持并发访问的<code>ConcurrentHashMap</code>里，定义的方法主要是用来操作map来实现会话的加入、关闭及查询。</p>
+<h4 id="Socket通用操作类"><a href="#Socket通用操作类" class="headerlink" title="Socket通用操作类"></a>Socket通用操作类</h4><p>有了操作<code>javax.websocket.Session</code>类及会话中心，现在封装一个服务端通过会话中心拿到Session给客户端发送消息的接口.</p>
+<p>定义一个<code>SocketOperatorApi</code>接口:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.exception.SocketException;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.message.SocketMsgCallbackInterface;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Socket通用操作类</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 可通过该类直接发送消息，每一个Socket实现的子模块必须实现该接口，以提供统一的操作API</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:25</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">SocketOperatorApi</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送消息到指定会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType   消息类型可参考&#123;<span class="hljs-doctag">@link</span> com.muly.wave.socket.api.enums&#125;枚举类</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> sessionId 会话ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg       消息体</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/11 下午2:19</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfUserSessionBySessionId</span><span class="hljs-params">(String msgType, String sessionId, Object msg)</span> <span class="hljs-keyword">throws</span> SocketException;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送消息到指定用户的所有会话</span><br><span class="hljs-comment">     * &lt;p&gt;</span><br><span class="hljs-comment">     * 如果用户同一个消息类型建立了多个会话，则统一全部发送</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType 消息类型可参考&#123;<span class="hljs-doctag">@link</span> com.muly.wave.socket.api.enums&#125;枚举类</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userId  用户ID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg     消息体</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:35</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfUserSession</span><span class="hljs-params">(String msgType, String userId, Object msg)</span> <span class="hljs-keyword">throws</span> SocketException;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送消息到所有会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType 消息类型可参考&#123;<span class="hljs-doctag">@link</span> com.muly.wave.socket.api.enums&#125;枚举类</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg     消息体</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:35</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfAllUserSession</span><span class="hljs-params">(String msgType, Object msg)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据会话id关闭会话</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> socketId 会话id</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/8/13 16:00</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">closeSocketBySocketId</span><span class="hljs-params">(String socketId)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 监听指定类型消息</span><br><span class="hljs-comment">     * &lt;p&gt;</span><br><span class="hljs-comment">     * 1.该方法每调用一次即注册一个监听,同一个消息类型多次调用只有最后一次生效</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType           消息类型可参考&#123;<span class="hljs-doctag">@link</span> com.muly.wave.socket.api.enums&#125;枚举类</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> callbackInterface 消息监听器</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:54</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">msgTypeCallback</span><span class="hljs-params">(String msgType, SocketMsgCallbackInterface callbackInterface)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以下为该接口的实现类,该实现类主要用于服务端向客户端发送消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> cn.hutool.core.util.ObjectUtil;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.SocketOperatorApi;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.exception.SocketException;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.exception.enums.SocketExceptionEnum;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.message.SocketMsgCallbackInterface;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.pojo.SocketSession;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.message.SocketMessageCenter;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.operator.channel.WaveSocketOperator;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.pojo.WebSocketMessageDTO;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.session.SessionCenter;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> java.util.Collection;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * WebSocket操作实现类</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 如果是Spring boot项目，通过注入SocketOperatorApi接口操作socket，需将本来交给Spring管理</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/2 上午10:41</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketOperator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">SocketOperatorApi</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfUserSessionBySessionId</span><span class="hljs-params">(String msgType, String sessionId, Object msg)</span> <span class="hljs-keyword">throws</span> SocketException &#123;<br>        SocketSession&lt;WaveSocketOperator&gt; session = SessionCenter.getSessionBySessionId(sessionId);<br>        <span class="hljs-keyword">if</span> (ObjectUtil.isEmpty(session)) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SocketException</span>(SocketExceptionEnum.SESSION_NOT_EXIST);<br>        &#125;<br>        <span class="hljs-type">WebSocketMessageDTO</span> <span class="hljs-variable">webSocketMessageDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketMessageDTO</span>();<br>        webSocketMessageDTO.setData(msg);<br>        webSocketMessageDTO.setServerMsgType(msgType);<br>        session.getSocketOperatorApi().writeAndFlush(webSocketMessageDTO);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfUserSession</span><span class="hljs-params">(String msgType, String userId, Object msg)</span> <span class="hljs-keyword">throws</span> SocketException &#123;<br>        <span class="hljs-comment">// 根据用户ID获取会话</span><br>        List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; socketSessionList = SessionCenter.getSessionByUserIdAndMsgType(userId);<br>        <span class="hljs-keyword">if</span> (ObjectUtil.isEmpty(socketSessionList)) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SocketException</span>(SocketExceptionEnum.SESSION_NOT_EXIST);<br>        &#125;<br>        <span class="hljs-type">WebSocketMessageDTO</span> <span class="hljs-variable">webSocketMessageDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketMessageDTO</span>();<br>        webSocketMessageDTO.setData(msg);<br>        webSocketMessageDTO.setServerMsgType(msgType);<br>        <span class="hljs-keyword">for</span> (SocketSession&lt;WaveSocketOperator&gt; session : socketSessionList) &#123;<br>            <span class="hljs-comment">// 发送内容</span><br>            session.getSocketOperatorApi().writeAndFlush(webSocketMessageDTO);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendMsgOfAllUserSession</span><span class="hljs-params">(String msgType, Object msg)</span> &#123;<br>        Collection&lt;List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt;&gt; values = SessionCenter.getSocketSessionMap().values();<br>        <span class="hljs-type">WebSocketMessageDTO</span> <span class="hljs-variable">webSocketMessageDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketMessageDTO</span>();<br>        webSocketMessageDTO.setData(msg);<br>        webSocketMessageDTO.setServerMsgType(msgType);<br>        <span class="hljs-keyword">for</span> (List&lt;SocketSession&lt;WaveSocketOperator&gt;&gt; sessions : values) &#123;<br>            <span class="hljs-keyword">for</span> (SocketSession&lt;WaveSocketOperator&gt; session : sessions) &#123;<br>                <span class="hljs-comment">// 找到该类型的通道</span><br>                <span class="hljs-keyword">if</span> (session.getMessageType().equals(msgType)) &#123;<br>                    session.getSocketOperatorApi().writeAndFlush(webSocketMessageDTO);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">closeSocketBySocketId</span><span class="hljs-params">(String socketId)</span> &#123;<br>        SessionCenter.closed(socketId);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">msgTypeCallback</span><span class="hljs-params">(String msgType, SocketMsgCallbackInterface callbackInterface)</span> &#123;<br>        SocketMessageCenter.setMessageListener(msgType, callbackInterface);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该接口涉及到一个WebSocket交互通用对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.SocketOperatorApi;<br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * WebSocket交互通用对象</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:56</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketMessageDTO</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 服务端发送的消息类型(客户端如果需要监听该消息类型，注册对应的消息处理器即可)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String serverMsgType;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 客户端发送的消息类型(服务端需要处理的消息类型)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String clientMsgType;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 目标Id</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String toUserId;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送者ID</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> String formUserId;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 具体发送的数据</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> Object data;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>鉴于以上多次提到了，<code>msgType</code>这个属性，这个类型定义了消息类型，用于区分服务端与客户端之间消息通讯的类型</p>
+<p>以下定义了三种类型的枚举方便管理，</p>
+<ul>
+<li><p><strong>SystemMessageTypeEnum</strong> </p>
+<p>该枚举适用于服务端监听首次连接和断开连接，以<code>S00</code>开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> lombok.Getter;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 服务端监听器枚举</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 说明：该枚举适用于服务端监听首次连接和断开连接</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/3 上午9:14</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Getter</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">SystemMessageTypeEnum</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 监听首次连接</span><br><span class="hljs-comment">     */</span><br>    SYS_LISTENER_ONOPEN(<span class="hljs-string">&quot;S00001&quot;</span>, <span class="hljs-string">&quot;监听首次连接&quot;</span>),<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 监听断开连接</span><br><span class="hljs-comment">     */</span><br>    SYS_LISTENER_ONCLOSE(<span class="hljs-string">&quot;S00002&quot;</span>, <span class="hljs-string">&quot;监听断开连接&quot;</span>),<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 监听异常信息</span><br><span class="hljs-comment">     */</span><br>    SYS_LISTENER_ONERROR(<span class="hljs-string">&quot;S00003&quot;</span>, <span class="hljs-string">&quot;监听异常信息&quot;</span>);<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String code;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br><br>    SystemMessageTypeEnum(String code, String name) &#123;<br>        <span class="hljs-built_in">this</span>.code = code;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>ServerMessageTypeEnum</strong></p>
+<p>该枚举适用于服务器推送给客户端消息时使用，以<code>100</code>开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> lombok.Getter;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 服务端消息类型枚举</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 说明：该枚举适用于服务器推送给客户端消息时使用</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/3 上午9:14</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Getter</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">ServerMessageTypeEnum</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 系统通知消息类型</span><br><span class="hljs-comment">     */</span><br>    SYS_NOTICE_MSG_TYPE(<span class="hljs-string">&quot;100001&quot;</span>, <span class="hljs-string">&quot;系统通知消息类型&quot;</span>),<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接消息回复</span><br><span class="hljs-comment">     */</span><br>    SYS_REPLY_MSG_TYPE(<span class="hljs-string">&quot;100002&quot;</span>, <span class="hljs-string">&quot;连接消息回复&quot;</span>);<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String code;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br><br>    ServerMessageTypeEnum(String code, String name) &#123;<br>        <span class="hljs-built_in">this</span>.code = code;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>ClientMessageTypeEnum</strong></p>
+<p>该枚举适用于服务器接收到客户端发来的消息，判断消息类型时使用,以<code>200</code>开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> lombok.Getter;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 客户端消息类型枚举</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 说明：该枚举适用于服务器接收到客户端发来的消息，判断消息类型时使用</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/3 上午9:14</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Getter</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">ClientMessageTypeEnum</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 用户连接鉴权</span><br><span class="hljs-comment">     */</span><br>    USER_CONNECTION_AUTHENTICATION(<span class="hljs-string">&quot;200000&quot;</span>, <span class="hljs-string">&quot;用户连接鉴权&quot;</span>),<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 用户心跳消息类型</span><br><span class="hljs-comment">     */</span><br>    USER_HEART(<span class="hljs-string">&quot;299999&quot;</span>, <span class="hljs-string">&quot;用户心跳消息类型&quot;</span>);<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String code;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br><br>    ClientMessageTypeEnum(String code, String name) &#123;<br>        <span class="hljs-built_in">this</span>.code = code;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>特殊说明一下<code>serverMsgType</code>和<code>clientMsgType</code>的区别<br>1.<code>serverMsgType</code>字段是服务端发送给客户端的字段<br>2.<code>clientMsgType</code>字段是客户端发送给服务器的字段<br>例如：客户端发送给服务器一个心跳消息(type:299999)，服务端如果需要处理该消息就注册一个该消息的监听器，那么收到消息服务端会把消息推送给对应的监听器，接口见{@link SocketOperatorApi#msgTypeCallback}</p>
+</blockquote>
+</li>
+</ul>
+<p>上述四个方法中，还涉及到一个方法<code>void msgTypeCallback(String msgType, SocketMsgCallbackInterface callbackInterface);</code></p>
+<p>其中<code>SocketMsgCallbackInterface</code>为Socket消息接收回调接口，根据枚举类型注入相应的消息处理方法，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.pojo.SocketSession;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Socket消息接收回调接口</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:53</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">SocketMsgCallbackInterface</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 收到消息的回调</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType       消息类型</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg           消息体</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> socketSession 本次通信的会话</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/2 上午9:51</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">callback</span><span class="hljs-params">(String msgType, Object msg, SocketSession socketSession)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该接口是一个函数式接口，可以使用java8的lambda表达式注入回调方法。</p>
+<p>再次构造个消息回调方法中心，用于存储各种消息类型的消息回调方法处理。messageListenerMap的key即为<code>msgType</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.muly.wave.socket.api.message.SocketMsgCallbackInterface;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 会话消息中心</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * 维护所有消息类型对应的处理器</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:20</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SocketMessageCenter</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 所有消息监听器维护</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Map&lt;String, SocketMsgCallbackInterface&gt; messageListenerMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 设置消息类型的监听器</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType  消息类型</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> listener 监听器</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:25</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setMessageListener</span><span class="hljs-params">(String msgType, SocketMsgCallbackInterface listener)</span> &#123;<br>        messageListenerMap.put(msgType, listener);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 获取消息监听器</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msgType 消息类型</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> SocketMsgCallbackInterface&#125;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:26</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SocketMsgCallbackInterface <span class="hljs-title function_">getSocketMsgCallbackInterface</span><span class="hljs-params">(String msgType)</span> &#123;<br>        <span class="hljs-keyword">return</span> messageListenerMap.get(msgType);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="消息监听处理器WebSocketServer"><a href="#消息监听处理器WebSocketServer" class="headerlink" title="消息监听处理器WebSocketServer"></a>消息监听处理器WebSocketServer</h4><p>该类为WebSocket的入口类，用于处理和客户端的连接关闭及接收客户端发送的消息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> cn.hutool.core.util.ObjectUtil;<br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSON;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.enums.ClientMessageTypeEnum;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.enums.ServerMessageTypeEnum;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.enums.SystemMessageTypeEnum;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.message.SocketMsgCallbackInterface;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.api.session.pojo.SocketSession;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.message.SocketMessageCenter;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.operator.channel.WaveSocketOperator;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.pojo.WebSocketMessageDTO;<br><span class="hljs-keyword">import</span> com.muly.wave.socket.websocket.session.SessionCenter;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-keyword">import</span> javax.websocket.*;<br><span class="hljs-keyword">import</span> javax.websocket.server.PathParam;<br><span class="hljs-keyword">import</span> javax.websocket.server.ServerEndpoint;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 消息监听处理器</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/6/1 下午2:35</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@ServerEndpoint(value = &quot;/webSocket/&#123;token&#125;&quot;)</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketServer</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接建立调用的方法</span><br><span class="hljs-comment">     * &lt;p&gt;</span><br><span class="hljs-comment">     * 暂时无用，需要在建立连接的时候做一些事情的话可以修改这里</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> session 会话信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/21 下午5:14</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-meta">@OnOpen</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onOpen</span><span class="hljs-params">(Session session, <span class="hljs-meta">@PathParam(&quot;token&quot;)</span> String token)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> token;<br>        <br>        <span class="hljs-comment">// todo 这里可以加上token校验处理获取用户信息</span><br><span class="hljs-comment">//        try &#123;</span><br><span class="hljs-comment">//            // 解析用户信息</span><br><span class="hljs-comment">//            DefaultJwtPayload defaultPayload = JwtContext.me().getDefaultPayload(token);</span><br><span class="hljs-comment">//            userId = defaultPayload.getUserId().toString();</span><br><span class="hljs-comment">//        &#125; catch (io.jsonwebtoken.JwtException e) &#123;</span><br><span class="hljs-comment">//            try &#123;</span><br><span class="hljs-comment">//                session.close();</span><br><span class="hljs-comment">//            &#125; catch (IOException ioException) &#123;</span><br><span class="hljs-comment">//                ioException.printStackTrace();</span><br><span class="hljs-comment">//            &#125;</span><br><span class="hljs-comment">//        &#125;</span><br><br>        <span class="hljs-comment">// 操作api包装</span><br>        <span class="hljs-type">WaveSocketOperator</span> <span class="hljs-variable">gunsSocketOperator</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WaveSocketOperator</span>(session);<br><br>        <span class="hljs-comment">// 回复消息</span><br>        <span class="hljs-type">WebSocketMessageDTO</span> <span class="hljs-variable">replyMsg</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocketMessageDTO</span>();<br>        replyMsg.setServerMsgType(ServerMessageTypeEnum.SYS_REPLY_MSG_TYPE.getCode());<br>        replyMsg.setToUserId(userId);<br><br>        <span class="hljs-comment">// 创建会话对象</span><br>        SocketSession&lt;WaveSocketOperator&gt; socketSession = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SocketSession</span>&lt;&gt;();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 设置回复内容</span><br>            replyMsg.setData(session.getId());<br>            socketSession.setSessionId(session.getId());<br>            socketSession.setUserId(userId);<br>            socketSession.setSocketOperatorApi(gunsSocketOperator);<br>            socketSession.setToken(token);<br>            socketSession.setConnectionTime(System.currentTimeMillis());<br><br>            <span class="hljs-comment">// 维护会话</span><br>            SessionCenter.addSocketSession(socketSession);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// 回复消息</span><br>            gunsSocketOperator.writeAndFlush(replyMsg);<br><br>            <span class="hljs-comment">// 触发首次连接回调</span><br>            <span class="hljs-type">SocketMsgCallbackInterface</span> <span class="hljs-variable">socketMsgCallbackInterface</span> <span class="hljs-operator">=</span> SocketMessageCenter.getSocketMsgCallbackInterface(SystemMessageTypeEnum.SYS_LISTENER_ONOPEN.getCode());<br>            <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketMsgCallbackInterface)) &#123;<br>                <span class="hljs-comment">// 触发回调</span><br>                socketMsgCallbackInterface.callback(SystemMessageTypeEnum.SYS_LISTENER_ONOPEN.getCode(), <span class="hljs-literal">null</span>, socketSession);<br>            &#125;<br>        &#125;<br><br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 连接关闭调用的方法</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> session 会话信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/21 下午5:14</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-meta">@OnClose</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClose</span><span class="hljs-params">(Session session)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            SocketSession&lt;WaveSocketOperator&gt; socketSession = SessionCenter.getSessionBySessionId(session.getId());<br>            <span class="hljs-comment">// 触发首次连接回调</span><br>            <span class="hljs-type">SocketMsgCallbackInterface</span> <span class="hljs-variable">socketMsgCallbackInterface</span> <span class="hljs-operator">=</span> SocketMessageCenter.getSocketMsgCallbackInterface(SystemMessageTypeEnum.SYS_LISTENER_ONCLOSE.getCode());<br>            <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketMsgCallbackInterface)) &#123;<br>                <span class="hljs-comment">// 触发回调</span><br>                socketMsgCallbackInterface.callback(SystemMessageTypeEnum.SYS_LISTENER_ONCLOSE.getCode(), <span class="hljs-literal">null</span>, socketSession);<br>            &#125;<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            SessionCenter.closed(session.getId());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 收到消息调用的方法</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> message       　接收到的消息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> socketChannel 会话信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/21 下午5:14</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-meta">@OnMessage</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onMessage</span><span class="hljs-params">(String message, Session socketChannel)</span> &#123;<br><br>        <span class="hljs-comment">// 转换为Java对象</span><br>        <span class="hljs-type">WebSocketMessageDTO</span> <span class="hljs-variable">webSocketMessageDTO</span> <span class="hljs-operator">=</span> JSON.parseObject(message, WebSocketMessageDTO.class);<br><br>        <span class="hljs-comment">// 维护通道是否已初始化</span><br>        SocketSession&lt;WaveSocketOperator&gt; socketSession = SessionCenter.getSessionBySessionId(socketChannel.getId());<br><br>        <span class="hljs-comment">// 心跳包</span><br>        <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketSession) &amp;&amp; ClientMessageTypeEnum.USER_HEART.getCode().equals(webSocketMessageDTO.getClientMsgType())) &#123;<br>            <span class="hljs-comment">// 更新会话最后活跃时间</span><br>            <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketSession)) &#123;<br>                socketSession.setLastActiveTime(System.currentTimeMillis());<br>            &#125;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// 用户ID为空不处理直接跳过</span><br>        <span class="hljs-keyword">if</span> (ObjectUtil.isEmpty(webSocketMessageDTO.getFormUserId())) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// 会话建立成功执行业务逻辑</span><br>        <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketSession)) &#123;<br><br>            <span class="hljs-comment">// 更新最后会话时间</span><br>            socketSession.setLastActiveTime(System.currentTimeMillis());<br><br>            <span class="hljs-comment">// 找到该消息的处理器</span><br>            <span class="hljs-type">SocketMsgCallbackInterface</span> <span class="hljs-variable">socketMsgCallbackInterface</span> <span class="hljs-operator">=</span> SocketMessageCenter.getSocketMsgCallbackInterface(webSocketMessageDTO.getClientMsgType());<br>            <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketMsgCallbackInterface)) &#123;<br>                <span class="hljs-comment">// 触发回调</span><br>                socketMsgCallbackInterface.callback(webSocketMessageDTO.getClientMsgType(), webSocketMessageDTO, socketSession);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                socketChannel.getAsyncRemote().sendText(<span class="hljs-string">&quot;&#123;\&quot;serverMsgType\&quot;:\&quot;404\&quot;&#125;&quot;</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 会话发送异常调用的方法</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> session 会话信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> error   　错误信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@author</span> wave-muly</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@date</span> 2021/6/21 下午5:14</span><br><span class="hljs-comment">     **/</span><br>    <span class="hljs-meta">@OnError</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onError</span><span class="hljs-params">(Session session, Throwable error)</span> &#123;<br>        SocketSession&lt;WaveSocketOperator&gt; socketSession = SessionCenter.getSessionBySessionId(session.getId());<br>        <span class="hljs-comment">// 触发首次连接回调</span><br>        <span class="hljs-type">SocketMsgCallbackInterface</span> <span class="hljs-variable">socketMsgCallbackInterface</span> <span class="hljs-operator">=</span> SocketMessageCenter.getSocketMsgCallbackInterface(SystemMessageTypeEnum.SYS_LISTENER_ONERROR.getCode());<br>        <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketMsgCallbackInterface)) &#123;<br>            <span class="hljs-comment">// 触发回调</span><br>            socketMsgCallbackInterface.callback(SystemMessageTypeEnum.SYS_LISTENER_ONERROR.getCode(), error, socketSession);<br>        &#125;<br>        log.error(<span class="hljs-string">&quot;session 发生错误:&quot;</span> + session.getId());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上述类中存在处理逻辑，定义了首次连接回调的方法，这里会去找<code>SocketMessageCenter</code>方法操作中心里的<code>SystemMessageTypeEnum.SYS_LISTENER_ONOPEN</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 触发首次连接回调</span><br>         <span class="hljs-type">SocketMsgCallbackInterface</span> <span class="hljs-variable">socketMsgCallbackInterface</span> <span class="hljs-operator">=</span> SocketMessageCenter.getSocketMsgCallbackInterface(SystemMessageTypeEnum.SYS_LISTENER_ONOPEN.getCode());<br>         <span class="hljs-keyword">if</span> (ObjectUtil.isNotEmpty(socketMsgCallbackInterface)) &#123;<br>             <span class="hljs-comment">// 触发回调</span><br>             socketMsgCallbackInterface.callback(SystemMessageTypeEnum.SYS_LISTENER_ONOPEN.getCode(), <span class="hljs-literal">null</span>, socketSession);<br>         &#125;<br></code></pre></td></tr></table></figure>
+
+<p>以下为示例,项目启动时注入一个首次连接回调处理方法：在<code>msgType</code>为SystemMessageTypeEnum.SYS_LISTENER_ONOPEN(<code>S00001</code>)时会调用该接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Author</span>: wave-muly</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Date</span>: 2021/10/9 14:09</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Order(99)</span><br><span class="hljs-meta">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MessageListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">CommandLineRunner</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SocketOperatorApi socketOperatorApi;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">(String... args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 项目启动默认注册了 监听首次连接的监听器 在客户端连接时会调用该监听器</span><br>        socketOperatorApi.msgTypeCallback(SystemMessageTypeEnum.SYS_LISTENER_ONOPEN.getCode(), (msgType, msg, socketSession)-&gt;&#123;<br>            log.info(<span class="hljs-string">&quot;connection success&quot;</span>);<br>            socketSession.getSocketOperatorApi().writeAndFlush(<span class="hljs-string">&quot;connection success&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>再定义一个服务端向客户端发送消息的示例，这里定义一个Controller</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs json">import com.muly.wave.socket.api.SocketOperatorApi;<br>import com.muly.wave.socket.api.enums.ServerMessageTypeEnum;<br>import com.muly.wave.socket.api.exception.SocketException;<br>import com.muly.wave.socket.websocket.pojo.SysMessage;<br>import lombok.RequiredArgsConstructor;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.http.MediaType;<br>import org.springframework.web.bind.annotation.*;<br><br>import java.util.Date;<br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @Author: wave-muly</span><br><span class="hljs-comment"> * @Date: 2021/10/9 11:28</span><br><span class="hljs-comment"> */</span><br>@RequestMapping(<span class="hljs-string">&quot;/api/v1/sys&quot;</span>)<br>@RestController<br>@RequiredArgsConstructor(onConstructor = @__(@Autowired))<br>public class SysMessageController <span class="hljs-punctuation">&#123;</span><br><br>    private final SocketOperatorApi socketOperatorApi;<br><br>    @PostMapping(value = <span class="hljs-string">&quot;/notice/&#123;userId&#125;&quot;</span><span class="hljs-punctuation">,</span> produces = MediaType.APPLICATION_JSON_VALUE)<br>    public void notice(@PathVariable(name = <span class="hljs-string">&quot;userId&quot;</span>) String userId<span class="hljs-punctuation">,</span> @RequestBody String messageContent) <span class="hljs-punctuation">&#123;</span><br>        SysMessage item = new SysMessage();<br>        item.setReceiveUserId(Long.valueOf(userId));<br>        item.setMessageContent(messageContent);<br>        item.setMessageType(ServerMessageTypeEnum.SYS_NOTICE_MSG_TYPE.getCode());<br>        item.setMessageSendTime(new Date());<br>        try <span class="hljs-punctuation">&#123;</span><br>            socketOperatorApi.sendMsgOfUserSession(ServerMessageTypeEnum.SYS_NOTICE_MSG_TYPE.getCode()<span class="hljs-punctuation">,</span> item.getReceiveUserId().toString()<span class="hljs-punctuation">,</span> item);<br>        <span class="hljs-punctuation">&#125;</span> catch (SocketException socketException) <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-comment">// 该用户不在线</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>以下为浏览器测试  [**WebSocket在线测试**](<a target="_blank" rel="noopener" href="http://websocket.jsonin.com/">WebSocket在线测试_在线模拟websocket请求工具 (jsonin.com)</a>)</p>
+<p><img src="https://image.itweek.top/mweb/2024-03-25-17113487373348-17113486980461.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://image.itweek.top/mweb/2024-03-25-17113487373373-17113486980480.png" srcset="/img/loading.gif" lazyload alt="image-20220424165738022"></p>
+<p>至此SpringBoot整合WebSocket完成，后续项目集成，只需要定义好<code>msgType</code>消息类型、处理token校验逻辑即可。<br>代码详见 <a target="_blank" rel="noopener" href="https://github.com/mulyzhou/wave-socket">wave-socket</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%AF%E8%AF%B4/" class="category-chain-item">术说</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SpringBoot/" class="print-no-link">#SpringBoot</a>
+      
+        <a href="/tags/WebSocket/" class="print-no-link">#WebSocket</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SpringBoot整合WebSocket实践</div>
+      <div>https://itweeks.xyz/2024/03/19/SpringBoot整合WebSocket实践/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wave Mu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/20/%E5%B0%86maven%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%A7%81%E6%9C%8D/" title="将maven项目打包上传到私服">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">将maven项目打包上传到私服</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%EF%BC%9APCM%E9%9F%B3%E9%A2%91%E6%B5%81%E8%BD%ACWAV/" title="记一次语音合成遇到的坑：PCM音频流转WAV">
+                        <span class="hidden-mobile">记一次语音合成遇到的坑：PCM音频流转WAV</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://waveblog.github.io/" target="_blank" rel="nofollow noopener"><span>WaveBlog</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

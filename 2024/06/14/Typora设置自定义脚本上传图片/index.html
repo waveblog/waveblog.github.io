@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/wave_blog_icon.png">
+  <link rel="icon" href="/img/wave_blog_icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wave Mu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="搭建图床服务 这里利用CloudFlare搭建免费的图床服务 cf-image-hosting  部署Pages123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ifyour&#x2F;cf-image-hosting.git$ cd cf-image-hosting$ npm install &amp;&amp; npm run deploy  部署成功后会显示如下信息  设置自定义域名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typora设置自定义脚本上传图片">
+<meta property="og:url" content="https://itweeks.xyz/2024/06/14/Typora%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:site_name" content="蜉蝣记">
+<meta property="og:description" content="搭建图床服务 这里利用CloudFlare搭建免费的图床服务 cf-image-hosting  部署Pages123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ifyour&#x2F;cf-image-hosting.git$ cd cf-image-hosting$ npm install &amp;&amp; npm run deploy  部署成功后会显示如下信息  设置自定义域名">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/129cc7ec09ffc9becc44a.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/032c93b767f0891db99b7.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/3b957e3b3e859164997ea.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/0e630bc8a1f11bc1c9537.png">
+<meta property="og:image" content="https://image.itweeks.xyz/file/c80d5a498c9307cfe01f5.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/2eac83479c385e3795811.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/54bca7c5508a7ab95f69b.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/b1a3aae08261fc53f2ce9.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/98cb02900f090930780f0.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/5b855c9143bdc51068441.png">
+<meta property="og:image" content="https://img.itweeks.xyz/file/810db36cd05b3d768213a.png">
+<meta property="article:published_time" content="2024-06-14T03:49:29.000Z">
+<meta property="article:modified_time" content="2024-07-13T00:04:21.058Z">
+<meta property="article:author" content="Wave Mu">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="Typora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png">
+  
+  
+  
+  <title>Typora设置自定义脚本上传图片 - 蜉蝣记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"itweeks.xyz","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"fee2009820308ab4809c5d784113e988","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Z2W18b4rQhZD0tEHTkeRTHxB-gzGzoHsz","app_key":"fJh998tyIYpXLEVOgd3aT2vM","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?fee2009820308ab4809c5d784113e988";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>蜉蝣记</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Typora设置自定义脚本上传图片"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-14 11:49" pubdate>
+          2024年6月14日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          本文总阅读量：<span id="leancloud-page-views"></span>
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Typora设置自定义脚本上传图片</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="搭建图床服务"><a href="#搭建图床服务" class="headerlink" title="搭建图床服务"></a>搭建图床服务</h3><blockquote>
+<p>这里利用<code>CloudFlare</code>搭建免费的图床服务</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ifyour/cf-image-hosting">cf-image-hosting</a></p>
+</blockquote>
+<h4 id="部署Pages"><a href="#部署Pages" class="headerlink" title="部署Pages"></a>部署Pages</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/ifyour/cf-image-hosting.git</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> cf-image-hosting</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm install &amp;&amp; npm run deploy</span><br></code></pre></td></tr></table></figure>
+
+<p>部署成功后会显示如下信息</p>
+<p><img src="https://image.itweeks.xyz/file/3c02d3849153debbfffd4.png" srcset="/img/loading.gif" lazyload alt="部署预览"></p>
+<h4 id="设置自定义域名"><a href="#设置自定义域名" class="headerlink" title="设置自定义域名"></a>设置自定义域名</h4><p>点击左侧<code>Workers和Pages</code> ，选择<code>cf-image-hosting</code></p>
+<p><img src="https://image.itweeks.xyz/file/129cc7ec09ffc9becc44a.png" srcset="/img/loading.gif" lazyload alt="设置自定义域名"></p>
+<p>设置自定义域成功后则能在部署概览看到自定义的域名</p>
+<p><img src="https://image.itweeks.xyz/file/032c93b767f0891db99b7.png" srcset="/img/loading.gif" lazyload alt="域名列表"></p>
+<p>点击自定义域名后则能跳转到具体的上传图片页面</p>
+<p><img src="https://image.itweeks.xyz/file/3b957e3b3e859164997ea.png" srcset="/img/loading.gif" lazyload alt="上传图片页面"></p>
+<p>至此，免费的图床服务搭建成功。</p>
+<h3 id="Typora自定义脚本上传图片"><a href="#Typora自定义脚本上传图片" class="headerlink" title="Typora自定义脚本上传图片"></a>Typora自定义脚本上传图片</h3><blockquote>
+<p>目前只在mac上做了验证。</p>
+</blockquote>
+<h4 id="官方文档说明"><a href="#官方文档说明" class="headerlink" title="官方文档说明"></a>官方文档说明</h4><blockquote>
+<p>官方文档对自定义脚本有如下说明:</p>
+<p><a target="_blank" rel="noopener" href="https://support.typora.io/Upload-Image/#use-current-filename--filepath-in-custom-commands">Typora自定义脚本</a></p>
+</blockquote>
+<p>You could config a custom command to upload images, using tools that is not listed in above options, or even write your own tools &#x2F; scripts. Typora will append all images that needs to be uploaded after the custom command you filled.</p>
+<blockquote>
+<p>您可以使用上述选项中未列出的工具，甚至编写自己的工具&#x2F;脚本，配置自定义命令来上传图片。Typora 会在你填写的自定义命令后追加所有需要上传的图片。</p>
+</blockquote>
+<p>Then, Typora will fetch image urls from the last N lines of the standard output of your custom command. (N is the number of images to upload).</p>
+<blockquote>
+<p>然后，Typora 会从自定义命令标准输出的最后 N 行中获取图片网址。(N 是要上传的图片数量）。</p>
+</blockquote>
+<p>For example, if you write a tool <code>upload-image.sh</code>, then you can input <code>[some path]/upload-image.sh</code> in the command filed. Typora will call <code>[some path]/upload-image.sh &quot;image-path-1&quot; &quot;image-path-2&quot;</code> to upload two images located in <code>image-path-1</code> and <code>image-path-2</code>. Then the command may return something like:</p>
+<blockquote>
+<p>例如，如果你编写了一个工具 <code>upload-image.sh</code> ，那么你可以在命令文件中输入 <code>[some path]/upload-image.sh</code> 。Typora 将调用 <code>[some path]/upload-image.sh &quot;image-path-1&quot; &quot;image-path-2&quot;</code> 来上传位于 <code>image-path-1</code> 和 <code>image-path-2</code> 中的两张图片。然后，命令可能会返回如下内容</p>
+</blockquote>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dts">Upload Success:<br><span class="hljs-symbol">http:</span><span class="hljs-comment">//remote-image-1.png</span><br><span class="hljs-symbol">http:</span><span class="hljs-comment">//remote-image-2.png</span><br></code></pre></td></tr></table></figure>
+
+<p>Then Typora will get the two remote image url from the output, and replace the original local images used in the Markdown document.</p>
+<blockquote>
+<p>然后，Typora 将从输出中获取两个远程图片 url，并替换 Markdown 文档中使用的原始本地图片。</p>
+</blockquote>
+<p>You could click the “Test Uploader” button to verify your custom commands.</p>
+<blockquote>
+<p>您可以点击 “测试上传程序 “按钮来验证您的自定义命令。</p>
+</blockquote>
+<h4 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h4><ol>
+<li><p><strong>赋予脚本执行权限</strong>：保存脚本后，需要给脚本赋予执行权限。在终端运行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +x upload_image.sh<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行脚本</strong>：在终端中运行脚本，并传递多个图片路径作为参数。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./upload_image.sh path/to/your/image1.jpg path/to/your/image2.jpg<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h5 id="脚本说明："><a href="#脚本说明：" class="headerlink" title="脚本说明："></a>脚本说明：</h5><ol>
+<li><strong>参数检查</strong>：检查是否传递了至少一个图片路径参数。如果没有传递参数，则打印用法信息并退出。</li>
+<li><strong>迭代处理每个图片文件</strong>：对每个传递的图片路径参数进行迭代处理。</li>
+<li><strong>文件检查</strong>：检查每个图片文件是否存在。如果文件不存在，则打印错误信息并继续处理下一个文件。</li>
+<li><strong>上传图片</strong>：使用<code>curl</code>命令将每个图片文件作为<code>file</code>参数上传到指定的API，并将响应存储在<code>RESPONSE</code>变量中。</li>
+<li><strong>解析响应</strong>：使用<code>jq</code>命令解析JSON响应并提取所有<code>src</code>参数的内容。如果<code>jq</code>解析失败，则打印错误信息并继续处理下一个文件。</li>
+<li><strong>打印结果</strong>：逐个打印成功上传后的每个<code>src</code>参数内容，即每张图片的URL。</li>
+</ol>
+<p>这个脚本会处理每个传递的图片文件，上传后解析并打印每个图片的URL。对于每个图片，如果上传失败或解析失败，会打印相应的错误信息，并继续处理下一个图片文件。</p>
+<h5 id="脚本内容："><a href="#脚本内容：" class="headerlink" title="脚本内容："></a>脚本内容：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">自定义URL部分</span><br>base_url=&quot;https://img.itweeks.xyz&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查是否安装了jq</span><br>if ! command -v jq &amp;&gt;/dev/null; then<br>    echo &quot;Error: jq is not installed. Please install jq before running this script. &quot;<br>    echo &quot;You can install jq using the following command:&quot;<br>    echo &quot;brew install jq [macOS]&quot;<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">用于存储图片URL的数组</span><br>image_urls=()<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">循环读取参数</span><br>for file_path in &quot;$@&quot;; do<br>    # 发送上传图片请求，关闭curl输出<br>    response=$(curl --location --request POST &quot;$&#123;base_url&#125;/upload&quot; \<br>        --header &#x27;User-Agent: Apifox/1.0.0 (https://apifox.com)&#x27; \<br>        --form &quot;file=@\&quot;$&#123;file_path&#125;\&quot;&quot; \<br>        --silent) # 添加 --silent 选项以关闭输出<br><br>    # 检查请求是否成功<br>    if [ $? -eq 0 ]; then<br>        # 解析返回的JSON并拼接图片URL<br>        img_url=&quot;$&#123;base_url&#125;$(echo &quot;$response&quot; | jq -r &#x27;.[0].src&#x27;)&quot;<br><br>        # 存储图片URL到数组<br>        image_urls+=(&quot;$&#123;img_url&#125;&quot;)<br>    else<br>        # 请求失败，输出错误信息并退出脚本<br>        echo &quot;Upload Failed&quot;<br>        exit 1<br>    fi<br>done<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">所有请求成功后输出成功信息</span><br>echo &quot;Upload Success&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">输出所有图片URL</span><br>for url in &quot;$&#123;image_urls[@]&#125;&quot;; do<br>    echo &quot;$&#123;url&#125;&quot;<br>done<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="调用示例"><a href="#调用示例" class="headerlink" title="调用示例:"></a>调用示例:</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">~/soft /Users/mulyzhou/soft/upload-image.sh &quot;/Applications/Typora.app/Contents/Resources/TypeMark/assets/icon/icon_512x512.png&quot; &quot;/Applications/Typora.app/Contents/Resources/TypeMark/assets/icon/icon_256x256.png&quot;<br>https://image.itweeks.xyz/file/213fb10821a7758807733.png<br>https://image.itweeks.xyz/file/78332611766cef414f192.png<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://image.itweeks.xyz/file/213fb10821a7758807733.png">https://image.itweeks.xyz/file/213fb10821a7758807733.png</a></p>
+<p><a target="_blank" rel="noopener" href="https://image.itweeks.xyz/file/78332611766cef414f192.png">https://image.itweeks.xyz/file/78332611766cef414f192.png</a></p>
+<p>这两行输出即是上传成功后回显图片的地址，一定要这样直接输出，中间不能输出别的信息，不然typora无法解析</p>
+</blockquote>
+<h4 id="Typora配置脚本"><a href="#Typora配置脚本" class="headerlink" title="Typora配置脚本"></a>Typora配置脚本</h4><p>点击<code>设置</code> - <code>图像</code> - <code>上传服务</code>选择<code>自定义命令</code> - 命令选择脚本路径 如<code>/Users/mulyzhou/soft/upload-image.sh</code></p>
+<p><img src="https://image.itweeks.xyz/file/0e630bc8a1f11bc1c9537.png" srcset="/img/loading.gif" lazyload alt="Typora配置脚本"></p>
+<p>点击验证图片上传选项</p>
+<p><img src="https://image.itweeks.xyz/file/c80d5a498c9307cfe01f5.png" srcset="/img/loading.gif" lazyload alt="验证成功示例"></p>
+<p>显示验证成功后则代表配置成功。</p>
+<h3 id="使用Telegraph-Image"><a href="#使用Telegraph-Image" class="headerlink" title="使用Telegraph-Image"></a>使用Telegraph-Image</h3><blockquote>
+<p>使用上述方式部署后发现无法查看图片上传历史记录，这里采用另外一种部署方式。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cf-pages/Telegraph-Image">Telegraph-Image</a></p>
+</blockquote>
+<h4 id="手把手教程"><a href="#手把手教程" class="headerlink" title="手把手教程"></a>手把手教程</h4><p>简单 3 步，即可部署本项目，拥有自己的图床</p>
+<p>1.Fork 本仓库 (注意：必须使用 Git 或者 Wrangler 命令行工具部署后才能正常使用，<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/pages/functions/get-started/#deploy-your-function">文档</a>)</p>
+<p>2.打开 Cloudflare Dashboard，进入 Pages 管理页面，选择创建项目，选择<code>连接到 Git 提供程序</code></p>
+<p><img src="https://img.itweeks.xyz/file/2eac83479c385e3795811.png" srcset="/img/loading.gif" lazyload alt="连接Git"></p>
+<ol>
+<li>按照页面提示输入项目名称，选择需要连接的 git 仓库，点击<code>部署站点</code>即可完成部署</li>
+</ol>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>1.无限图片储存数量，你可以上传不限数量的图片</p>
+<p>2.无需购买服务器，托管于 Cloudflare 的网络上，当使用量不超过 Cloudflare 的免费额度时，完全免费</p>
+<p>3.无需购买域名，可以使用 Cloudflare Pages 提供的<code>*.pages.dev</code>的免费二级域名，同时也支持绑定自定义域名</p>
+<p>4.支持图片审查 API，可根据需要开启，开启后不良图片将自动屏蔽，不再加载</p>
+<p>5.支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作</p>
+<h4 id="绑定自定义域名"><a href="#绑定自定义域名" class="headerlink" title="绑定自定义域名"></a>绑定自定义域名</h4><p>在 pages 的自定义域里面，绑定 cloudflare 中存在的域名，在 cloudflare 托管的域名，自动会修改 dns 记录 <img src="https://img.itweeks.xyz/file/54bca7c5508a7ab95f69b.png" srcset="/img/loading.gif" lazyload alt="自定义域名"></p>
+<h4 id="开启图片审查"><a href="#开启图片审查" class="headerlink" title="开启图片审查"></a>开启图片审查</h4><p>1.请前往<a target="_blank" rel="noopener" href="https://moderatecontent.com/">https://moderatecontent.com/</a> 注册并获得一个免费的用于审查图像内容的 API key</p>
+<p>2.打开 Cloudflare Pages 的管理页面，依次点击<code>设置</code>，<code>环境变量</code>，<code>添加环境变量</code></p>
+<p>3.添加一个<code>变量名称</code>为<code>ModerateContentApiKey</code>，<code>值</code>为你刚刚第一步获得的<code>API key</code>，点击<code>保存</code>即可</p>
+<p>注意：由于所做的更改将在下次部署时生效，你或许还需要进入<code>部署</code>页面，重新部署一下该本项目</p>
+<p>开启图片审查后，因为审查需要时间，首次的图片加载将会变得缓慢，之后的图片加载由于存在缓存，并不会受到影响 <img src="https://img.itweeks.xyz/file/b1a3aae08261fc53f2ce9.png" srcset="/img/loading.gif" lazyload alt="图片审查环境变量设置"></p>
+<h4 id="设置图片管理功能"><a href="#设置图片管理功能" class="headerlink" title="设置图片管理功能"></a>设置图片管理功能</h4><p>1、支持图片管理功能，默认是关闭的，如需开启请部署完成后前往后台依次点击<code>设置</code>-&gt;<code>函数</code>-&gt;<code>KV 命名空间绑定</code>-&gt;<code>编辑绑定</code>-&gt;<code>变量名称</code>填写：<code>img_url</code> <code>KV 命名空间</code> 选择你提前创建好的 KV 储存空间，开启后访问 http(s):&#x2F;&#x2F;你的域名&#x2F;admin 即可打开后台管理页面</p>
+<table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>KV 命名空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>img_url</td>
+<td>选择提前创建好的 KV 储存空间</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/fc772e54ae519d846f80baa9cb6894866815984e9b28ac170eb5cf12c7716274/68747470733a2f2f696d2e6775726c2e65752e6f72672f66696c652f6130633231326435646662363166333635326430372e706e67"><img src="https://img.itweeks.xyz/file/98cb02900f090930780f0.png" srcset="/img/loading.gif" lazyload alt="img"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2ccb03fba40676ce418b0574365749928a5878ab6d529f065cde9fbc17064e42/68747470733a2f2f696d2e6775726c2e65752e6f72672f66696c652f3438623933313665643031386232636236376366342e706e67"><img src="https://img.itweeks.xyz/file/5b855c9143bdc51068441.png" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>2、后台管理页面新增登录验证功能，默认也是关闭的，如需开启请部署完成后前往后台依次点击<code>设置</code>-&gt;<code>环境变量</code>-&gt;<code>为生产环境定义变量</code>-&gt;<code>编辑变量</code> 添加如下表格所示的变量即可开启登录验证</p>
+<table>
+<thead>
+<tr>
+<th>变量名称</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BASIC_USER &#x3D;</td>
+<td>&lt;后台管理页面登录用户名称&gt;</td>
+</tr>
+<tr>
+<td>BASIC_PASS &#x3D;</td>
+<td>&lt;后台管理页面登录用户密码&gt;</td>
+</tr>
+</tbody></table>
+<p><img src="https://img.itweeks.xyz/file/810db36cd05b3d768213a.png" srcset="/img/loading.gif" lazyload alt="后台管理账号环境变量设置"></p>
+<blockquote>
+<p>当然你也可以不设置这两个值，这样访问后台管理页面时将无需验证，直接跳过登录步骤，这一设计使得你可以结合 Cloudflare Access 进行使用，实现支持邮件验证码登录，Microsoft 账户登录，Github 账户登录等功能，能够与你域名上原有的登录方式所集成，无需再次记忆多一组后台的账号密码，添加 Cloudflare Access 的方式请参考官方文档，注意需要保护路径包括&#x2F;admin 以及 &#x2F;api&#x2F;manage&#x2F;*</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%AF%E8%AF%B4/" class="category-chain-item">术说</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
+      
+        <a href="/tags/Mac/" class="print-no-link">#Mac</a>
+      
+        <a href="/tags/Typora/" class="print-no-link">#Typora</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Typora设置自定义脚本上传图片</div>
+      <div>https://itweeks.xyz/2024/06/14/Typora设置自定义脚本上传图片/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wave Mu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/20/chmod%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="chmod命令详解">
+                        <span class="hidden-mobile">chmod命令详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://waveblog.github.io/" target="_blank" rel="nofollow noopener"><span>WaveBlog</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
